@@ -1,57 +1,79 @@
-import { Heart, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingBag, } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useCart } from './utils/CartContext';
 
 interface ProductCardProps {
-  name: string;
-  price: number;
+  id: number;
+  nome: string;
+  preco: number;
   originalPrice?: number;
-  image: string;
+  imagem: string;
   isNew?: boolean;
   discount?: number;
 }
 
-export default function ProductCard({ name, price, originalPrice, image, isNew, discount }: ProductCardProps) {
+export default function ProductCard({id, nome, preco, originalPrice, imagem, isNew, discount }: ProductCardProps) {
+  const { addItem } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    addItem({
+      id: String(id),
+      name: nome,
+      image: imagem,
+      price: preco,
+      quantity: 1,
+    });
+  }
   return (
-    <div className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
-      {isNew && (
-        <span className="absolute top-2 left-2 bg-[#5483B3] text-white text-xs px-3 py-1 rounded-full z-10">
-          NOVO
-        </span>
-      )}
-      {discount && (
-        <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full z-10">
-          -{discount}%
-        </span>
-      )}
-
-      <div className="relative aspect-square bg-gray-100 overflow-hidden">
-        <div className="w-full h-full flex items-center justify-center text-gray-400">
-          {image}
-        </div>
-
-        <button className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-2 shadow-md hover:bg-gray-50">
-          <Heart className="w-5 h-5 text-gray-700" />
-        </button>
-      </div>
-
-      <div className="p-4">
-        <h3 className="text-sm text-gray-700 mb-2 line-clamp-2">{name}</h3>
-
-        <div className="flex items-center gap-2 mb-3">
-          {originalPrice && (
-            <span className="text-sm text-gray-400 line-through">
-              R$ {originalPrice.toFixed(2)}
-            </span>
-          )}
-          <span className="text-lg font-bold text-[#5483B3]">
-            R$ {price.toFixed(2)}
+    <Link to={`/produto/${id}`} className="no-underline ">
+      <div className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+        {isNew && (
+          <span className="absolute top-2 left-2 bg-[#5483B3] text-white text-xs px-3 py-1 rounded-full z-10">
+            NOVO
           </span>
+        )}
+        {discount && (
+          <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full z-10">
+            -{discount}%
+          </span>
+        )}
+
+        <div className="relative aspect-square bg-white-100 overflow-hidden">
+          <img 
+          src={imagem} 
+          alt={nome} 
+          className="w-full h-full object-cover" 
+          loading="lazy" 
+          />
+          
+
+          <button className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-2 shadow-md hover:bg-gray-50">
+            <Heart className="w-5 h-5 text-gray-700" />
+          </button>
         </div>
 
-        <button className="w-full bg-[#5483B3] text-white py-2 rounded-lg font-medium hover:bg-[#052659] transition flex items-center justify-center gap-2">
-          <ShoppingBag className="w-4 h-4" />
-          Adicionar
-        </button>
+        <div className="p-4">
+          <h3 className="text-lg text-black-700 mb-2 line-clamp-2">{nome}</h3>
+
+          <div className="flex items-center gap-2 mb-3">
+            {originalPrice && (
+              <span className="text-sm text-gray-400 line-through">
+                R$ {originalPrice.toFixed(2)}
+              </span>
+            )}
+            <span className="text-lg font-bold text-[#5483B3]">
+              R$ {preco.toFixed(2)}
+            </span>
+          </div>
+
+          <button className="w-full bg-[#5483B3] text-white py-2 rounded-lg font-medium hover:bg-[#052659] transition flex items-center justify-center gap-2"
+          onClick={handleAddToCart}>
+            <ShoppingBag className="w-4 h-4" />
+            Adicionar
+          </button>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

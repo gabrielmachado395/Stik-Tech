@@ -2,10 +2,10 @@ import ProductCard from './ProductCard';
 
 interface Product {
   id: number;
-  name: string;
-  price: number;
+  nome: string;
+  preco: number;
   originalPrice?: number;
-  image: string;
+  imagem: string;
   isNew?: boolean;
   discount?: number;
 }

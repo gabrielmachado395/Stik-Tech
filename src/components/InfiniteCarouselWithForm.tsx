@@ -21,13 +21,13 @@ export default function InfiniteCarouselWithForm() {
   }, [index]);
 
   return (
-    <div className="relative w-full h-[300px] md:h-[600px] flex items-center justify-center overflow-hidden">
+    <div className="relative w-full h-[420px] md:h-[600px] flex items-center justify-center overflow-hidden">
       <AnimatePresence>
         <motion.img
           key={images[index]}
           src={images[index]}
           alt=""
-          className="absolute inset-0 w-full h-full object-fill"
+          className="absolute inset-0 w-full h-full object-cover"
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
@@ -35,7 +35,14 @@ export default function InfiniteCarouselWithForm() {
         />
       </AnimatePresence>
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        <div className="bg-white/80 rounded-lg p-6 shadow-lg max-w-md mx-auto">
+        <div className="
+        w-full max-w-md mx-auto 
+        bg-white/80 rounded-lg p-6 shadow-lg
+        mb-0 md:mb-0
+        bottom-0
+        md:static
+        translate-y-24 md:translate-y-0
+        ">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-800">BAIXE NOSSO CATÁLOGO</h2>
           <form className="flex flex-col gap-3">
             <input

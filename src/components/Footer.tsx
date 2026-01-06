@@ -26,7 +26,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Institucional</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-[#08407a] transition">Sobre Nós</a></li>
+              <li><a href="/sobre-nos" className="hover:text-[#08407a] transition">Sobre Nós</a></li>
               {/* <li><a href="#" className="hover:text-[#08407a] transition">Lojas Físicas</a></li> */}
               <li><a href="#" className="hover:text-[#08407a] transition">Trabalhe Conosco</a></li>
               <li><a href="#" className="hover:text-[#08407a] transition">Blog</a></li>
@@ -57,7 +57,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            <p>&copy; 2025 Stik Elásticos. Todos os direitos reservados.</p>
+            <p>&copy; 2026 Stik Elásticos. Todos os direitos reservados.</p>
             <div className="flex gap-4">
               <span>CNPJ: 07.295.413/0001-90</span>
             </div>
