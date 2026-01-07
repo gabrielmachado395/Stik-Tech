@@ -5,6 +5,7 @@ import ProductCard from "../ProductCard";
 import { useState } from "react"
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "../utils/CartContext";
+import { AnimatedSection } from "../animations/AnimatedSections";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -41,7 +42,8 @@ export default function ProductDetailPage() {
         });
     }
     return (
-    <div className="w-full md:max-w-7xl mx-auto px-4 py-8">
+    <AnimatedSection>
+    <div className="w-full max-w-7xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <nav className=" text-center text-ms  text-gray-500 mb-4">
         <Link to="/" className="hover:underline">Home</Link> &gt;{" "}
@@ -163,5 +165,6 @@ export default function ProductDetailPage() {
         </div>
       </div>
     </div>
+    </AnimatedSection>
   );
 }

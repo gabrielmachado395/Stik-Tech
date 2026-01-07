@@ -59,7 +59,7 @@ export default function InfiniteCarouselWithForm() {
             </button>
             <label className="flex items-center text-xs text-gray-700 mt-2">
               <input type="checkbox" required className="mr-2" />
-              <span>Eu concordo em receber comunicações da Stik por e-mail (promoções e novidades). Li a <a href="#" className="underline ml-1">Política de Privacidade</a>.</span>
+              <span>Eu concordo em receber comunicações da Stik por e-mail (promoções e novidades). Li a <a href="/politica-de-privacidade" className="underline ml-1">Política de Privacidade</a>.</span>
             </label>
           </form>
         </div>

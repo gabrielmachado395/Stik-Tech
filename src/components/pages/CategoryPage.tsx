@@ -41,7 +41,7 @@ export default function CategoryPage() {
 
   return (
     <AnimatedSection>
-    <div className="bg-white min-h-screen pb-20">
+    <div className=" min-h-screen pb-20">
       {/* Banner */}
       <div className="w-full h-48 md:h-64 bg-cover bg-center flex items-end" style={{ backgroundImage: "url('/img/categoria-banner.webp')" }}>
       </div>

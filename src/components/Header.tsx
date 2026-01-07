@@ -19,19 +19,18 @@ export default function Header() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex items-center justify-between gap-4">
-          <button className="lg:hidden">
-            <Menu className="w-6 h-6" />
-          </button>
-
-          <a href="/" className="flex items-center">
-            <img src="/img/logo.png" alt="Logo" className="h-20 w-auto" />
-          </a>
-
-          <div className="flex-1 max-w-xl mx-8 hidden md:block">
-            <SearchProducts />
+        {/* Linha principal: logo, ícones */}
+        <div className="flex items-center justify-between gap-4 w-full">
+          {/* Menu e logo */}
+          <div className="flex items-center gap-2">
+            <button className="lg:hidden">
+              <Menu className="w-6 h-6" />
+            </button>
+            <a href="/" className="flex items-center">
+              <img src="/img/logo.png" alt="Logo" className="h-12 md:h-20 w-auto" />
+            </a>
           </div>
-
+          {/* Ícones */}
           <div className="flex items-center gap-4">
             <button className="flex flex-col items-center text-gray-700 hover:text-[#769FCD]">
               <User className="w-6 h-6" />
@@ -42,19 +41,23 @@ export default function Header() {
               <span className="text-xs hidden sm:block">Favoritos</span>
             </button>
             <button className="flex flex-col items-center text-gray-700 hover:text-[#769FCD] relative"
-             onClick={() => setCartOpen(true)}
-             >
+              onClick={() => setCartOpen(true)}
+            >
               <ShoppingBag className="w-6 h-6" />
               {totalItems > 0 && (
                 <span className="absolute top-2 -right-2 bg-[#5483B3] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white">
-              {totalItems}
-              </span>
+                  {totalItems}
+                </span>
               )}
               <span className="text-xs hidden sm:block">Sacola</span>
             </button>
           </div>
         </div>
-
+        {/* Campo de busca: abaixo no mobile, centralizado no desktop */}
+        <div className="w-full max-w-xl mx-auto mt-4 md:mt-10 md:absolute md:left-1/2 md:-translate-x-1/2 md:top-8">
+          <SearchProducts />
+        </div>
+        {/* Menu de navegação */}
         <nav className="hidden lg:flex items-center justify-center gap-6 mt-4 text-sm font-medium">
           <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/lancamentos')}>LANÇAMENTOS</a>
           <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/elasticos-crus')}>ELÁSTICOS CRUS</a>

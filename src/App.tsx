@@ -13,6 +13,8 @@ import ScrollToTop from './components/animations/ScrollToTop';
 import {products} from './components/Products';
 import ProductDetailPage from './components/pages/ProductDetailPage';
 import AboutUsPage from './components/pages/AboutUsPage';
+import PrivacyPoliticPage from './components/pages/PrivacyPoliticPage';
+import FAQ from './components/pages/FAQ';
 
 
 
@@ -53,6 +55,9 @@ function App() {
         <Route path="/categorias/:categoria" element={<CategoryPage />} />
         <Route path="/produto/:id" element={<ProductDetailPage />} />
         <Route path="/sobre-nos" element={<AboutUsPage />} />
+        <Route path="/politica-de-privacidade" element={<PrivacyPoliticPage />} />
+        <Route path="/perguntas-frequentes" element={<FAQ />} />
+
       </Routes>
       <AnimatedSection>
         <InfiniteCarouselWithForm />
