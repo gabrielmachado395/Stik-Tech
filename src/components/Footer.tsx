@@ -29,7 +29,7 @@ export default function Footer() {
               <li><a href="/sobre-nos" className="hover:text-[#08407a] transition">Sobre Nós</a></li>
               {/* <li><a href="#" className="hover:text-[#08407a] transition">Lojas Físicas</a></li> */}
               <li><a href="https://vagas.stik.com.br" className="hover:text-[#08407a] transition">Trabalhe Conosco</a></li>
-              <li><a href="#" className="hover:text-[#08407a] transition">Blog</a></li>
+              <li><a href="/blog" className="hover:text-[#08407a] transition">Blog</a></li>
             </ul>
           </div>
 

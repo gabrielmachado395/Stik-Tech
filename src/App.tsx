@@ -15,6 +15,9 @@ import ProductDetailPage from './components/pages/ProductDetailPage';
 import AboutUsPage from './components/pages/AboutUsPage';
 import PrivacyPoliticPage from './components/pages/PrivacyPoliticPage';
 import FAQ from './components/pages/FAQ';
+import CreateArticlePage from './components/pages/CreateArticlePage';
+import BlogPage from './components/pages/BlogPage';
+import ArticlePage from './components/pages/ArticlePage';
 
 
 
@@ -57,6 +60,10 @@ function App() {
         <Route path="/sobre-nos" element={<AboutUsPage />} />
         <Route path="/politica-de-privacidade" element={<PrivacyPoliticPage />} />
         <Route path="/perguntas-frequentes" element={<FAQ />} />
+        <Route path="/criar-artigo" element={<CreateArticlePage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:id" element={<ArticlePage />} />
+        
 
       </Routes>
       <AnimatedSection>
