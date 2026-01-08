@@ -37,7 +37,7 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4">Atendimento</h4>
             <ul className="space-y-2 text-sm">
               <li><a href="/perguntas-frequentes" className="hover:text-[#08407a] transition">Fale Conosco</a></li>
-              <li><a href="#" className="hover:text-[#08407a] transition">Meus Pedidos</a></li>
+              <li><a href="/meus-pacotes" className="hover:text-[#08407a] transition">Meus Pedidos</a></li>
               <li><a href="/politica-de-privacidade" className="hover:text-[#08407a] transition">Política de Privacidade</a></li>
               {/* <li><a href="#" className="hover:text-[#08407a] transition">Tabela de Medidas</a></li> */}
               {/* <li><a href="#" className="hover:text-[#08407a] transition">Formas de Pagamento</a></li> */}

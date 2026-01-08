@@ -38,7 +38,7 @@ export default function AboutUsPage() {
                     key={i}
                     src={src}
                     alt={`Sobre nós ${i + 1}`}
-                    className="w-72 h-72 object-cover rounded-xl shadow-lg transition-transform hover:scale-105" 
+                    className="w-72 h-72 object-cover rounded-xl transition-shadow hover:shadow-xl" 
                     variants={item}
                 />
             ))}

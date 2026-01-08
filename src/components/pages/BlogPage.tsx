@@ -21,11 +21,13 @@ export default function BlogPage() {
         </div>
       </div>
       {/* Grid de artigos */}
-      <div className="max-w-7xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 ">
         {paginated.map(article => (
-          <Link to={`/blog/${article.id}`} key={article.id} className="rounded-xl overflow-hidden shadow bg-white hover:shadow-lg transition flex flex-col">
+          <Link to={`/blog/${article.id}`} key={article.id} className="rounded-xl overflow-hidden shadow bg-white hover:shadow-lg  flex flex-col group transform transition-transform duration-300 hover:scale-105">
             <div className="relative">
-              <img src={article.image} alt={article.title} className="w-full h-56 object-cover" />
+              <img src={article.image} alt={article.title} className="w-full h-56 object-cover object-center mx-auto" />
+              {/* Gradiente das imagens */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent  rounded-xl" />
               {/* Tags */}
               <div className="absolute bottom-0 left-0 w-full px-3 pb-3 flex flex-wrap gap-2">
                 {article.tags.map((tag, idx) => (
@@ -37,13 +39,12 @@ export default function BlogPage() {
                     {tag}
                   </span>
                 ))}
-              </div>
-            </div>
-            <div className="p-4 flex-1 flex items-end">
-              <h2 className="text-lg font-bold text-gray-800 leading-tight break-words">
+              <h2 className="text-lg font-sans text-gray-100 leading-tight break-words">
                 {article.title}
               </h2>
+              </div>
             </div>
+            
           </Link>
         ))}
       </div>
@@ -54,6 +55,10 @@ export default function BlogPage() {
             <button
               key={i + 1}
               className={`px-3 py-1 rounded border font-bold ${page === i + 1 ? "bg-[#5483B3] text-white" : "bg-white text-[#5483B3]"}`}
+              onClick={() => {
+                // Lógica para mudar de página
+                }
+              } 
             >
               {i + 1}
             </button>

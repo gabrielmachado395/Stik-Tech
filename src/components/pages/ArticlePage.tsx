@@ -34,8 +34,8 @@ export default function ArticlePage() {
             </span>
           ))}
         </div>
-        <h1 className="text-3xl font-bold text-[#181C23] mb-2">{article.title}</h1>
-        <div className="text-gray-500 text-sm mb-6">{article.date}</div>
+        <h1 className="text-3xl font-bold text-[#181C23] mb-2  pb-2">{article.title}</h1>
+        <div className="text-gray-500 text-sm mb-6 border-b-2 border-gray-200 pb-2">{article.date}</div>
         {/* Conteúdo dinâmico */}
         <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
         {/* Navegação entre artigos */}
@@ -61,12 +61,23 @@ export default function ArticlePage() {
         <h2 className="text-2xl font-bold mb-4 mx-auto max-w-4xl">Leia também</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl h-full mx-auto">
           {leiaTambem.map(a => (
-            <Link to={`/blog/${a.id}`} key={a.id} className="rounded-xl overflow-hidden shadow bg-white hover:shadow-lg transition flex flex-col">
-              <img src={a.image} alt={a.title} className="w-full h-64 object-cover" />
-              <div className="p-4 flex-1 flex items-end">
-                <h3 className="text-base font-bold text-gray-800 leading-tight break-words">
-                  {a.title}
-                </h3>
+            <Link to={`/blog/${a.id}`} key={a.id} className="rounded-xl overflow-hidden shadow bg-white group transform transition-transform duration-300 hover:scale-105 flex flex-col">
+            <div className="relative">
+              <img src={a.image} alt={a.title} className="w-full h-64 object-cover object-center mx-auto" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent  rounded-xl" />
+                <div className="absolute bottom-0 left-0 w-full px-3 pb-3 flex flex-wrap gap-2 z-10">
+          {a.tags.map((tag, idx) => (
+            <span
+              key={tag + idx}
+              className="bg-white/90 text-[#5483B3] px-2 py-1 rounded text-xs font-semibold mb-1"
+            >
+              {tag}
+            </span>
+          ))}
+          <h2 className="text-base font-sans text-white leading-tight break-words w-full mt-2">
+            {a.title}
+          </h2>
+        </div>
               </div>
             </Link>
           ))}

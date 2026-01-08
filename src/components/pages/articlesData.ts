@@ -4,7 +4,7 @@ export const articles = [
   {
     id: 1,
     title: "Legging flare em alta! Leve conforto para suas coleções.",
-    image: "/img/SobreNos/primeira foto.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Estilo", "Moda", "Produtos", "Tendências"],
     category: "Estilo",
     date: "17 novembro, 2025",
@@ -28,7 +28,7 @@ export const articles = [
   {
     id: 2,
     title: "Passarelas e lingeries: a moda e sua obsessão pela roupa íntima",
-    image: "/img/Categorias/Rendas/ana-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Estilo", "Moda", "Produtos", "Tendências"],
     category: "Estilo",
     date: "20 novembro, 2025",
@@ -37,7 +37,7 @@ export const articles = [
   {
     id: 3,
     title: "Combine seu guarda-roupa com a moda dos anos 60",
-    image: "/img/Categorias/Elásticos Crus/canoa-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Consumidor", "Dicas", "Estilo", "Moda", "Tendências"],
     category: "Estilo",
     date: "22 novembro, 2025",
@@ -46,7 +46,7 @@ export const articles = [
   {
     id: 4,
     title: "Azul Cobalto: a cor que promete dominar os próximos anos",
-    image: "/img/Categorias/Premium/chll-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Estilo", "Moda", "Tendências"],
     category: "Estilo",
     date: "25 novembro, 2025",
@@ -55,7 +55,7 @@ export const articles = [
   {
     id: 5,
     title: "Novidade no street style! Conheça a calça bloomer",
-    image: "/img/Categorias/Bases/caricia-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Estilo", "Moda", "Produtos", "Tendências"],
     category: "Estilo",
     date: "28 novembro, 2025",
@@ -64,7 +64,7 @@ export const articles = [
   {
     id: 6,
     title: "Como as inovações tecnológicas estão mudando a indústria da moda",
-    image: "/img/Categorias/Personalizados/fox-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Consumidor", "Estilo", "Moda", "Negócios"],
     category: "Estilo",
     date: "30 novembro, 2025",
@@ -73,7 +73,7 @@ export const articles = [
   {
     id: 7,
     title: "Retorno das faixas de cabelo",
-    image: "/img/Categorias/Alças/dayane-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Estilo", "Moda", "Produtos", "Tendências"],
     category: "Estilo",
     date: "2 dezembro, 2025",
@@ -82,7 +82,7 @@ export const articles = [
   {
     id: 8,
     title: "Elásticos Zanotti indicados para sua coleção de moda praia",
-    image: "/img/Categorias/Personalizados/lexia-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Dicas", "Estilo", "Moda", "Produtos", "Tendências"],
     category: "Estilo",
     date: "4 dezembro, 2025",
@@ -91,7 +91,7 @@ export const articles = [
   {
     id: 9,
     title: "Mês da moda: os destaques que marcaram setembro",
-    image: "/img/Categorias/Viés/atlas-stik (1).png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Estilo", "Moda", "Negócios", "Tendências"],
     category: "Estilo",
     date: "7 dezembro, 2025",
@@ -100,7 +100,7 @@ export const articles = [
   {
     id: 10,
     title: "Tendência Club para moda esportiva",
-    image: "/img/Categorias/Personalizados/pluspesonalisados-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Estilo", "Moda", "Negócios", "Tendências"],
     category: "Estilo",
     date: "10 dezembro, 2025",
@@ -109,7 +109,7 @@ export const articles = [
   {
     id: 11,
     title: "Lançamento editorial 2026/27",
-    image: "/img/Categorias/Personalizados/senna-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Estilo", "Lançamentos", "Moda", "Tendências"],
     category: "Estilo",
     date: "12 dezembro, 2025",
@@ -118,7 +118,7 @@ export const articles = [
   {
     id: 12,
     title: "Roxo é o queridinho das passarelas de inverno em 2025",
-    image: "/img/Categorias/Premium/listras-stik.png",
+    image: "/img/Blog/teste_blog-768x384.png",
     tags: ["Dicas", "Estilo", "Moda"],
     category: "Estilo",
     date: "15 dezembro, 2025",

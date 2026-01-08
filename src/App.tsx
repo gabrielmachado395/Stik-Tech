@@ -18,6 +18,7 @@ import FAQ from './components/pages/FAQ';
 import CreateArticlePage from './components/pages/CreateArticlePage';
 import BlogPage from './components/pages/BlogPage';
 import ArticlePage from './components/pages/ArticlePage';
+import MyPackages from './components/pages/MyPackages';
 
 
 
@@ -63,6 +64,8 @@ function App() {
         <Route path="/criar-artigo" element={<CreateArticlePage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:id" element={<ArticlePage />} />
+        <Route path="/meus-pacotes" element={<MyPackages />} />
+
         
 
       </Routes>

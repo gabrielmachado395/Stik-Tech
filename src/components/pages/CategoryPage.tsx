@@ -92,7 +92,7 @@ export default function CategoryPage() {
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {produtosVisiveis.map(prod => (
               <Link to={`/produto/${prod.id}`} key={prod.nome} className="no-underline">
-              <div key={prod.nome} className="bg-zinc-100 w-full rounded-lg shadow hover:shadow-xl transition-shadow flex flex-col">
+              <div key={prod.nome} className=" w-full rounded-lg shadow hover:shadow-xl transition-shadow flex flex-col border border-gray-100">
                 <img src={prod.imagem} alt={prod.nome} className="w-full h-full rounded-t-sm" />
                 <div className="p-4 flex flex-col flex-1">
                   <h3 className="font-semibold mb-1">{prod.nome}</h3>
