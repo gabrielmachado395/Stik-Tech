@@ -1,5 +1,6 @@
 import { articles } from "./articlesData";
 import { Link } from "react-router-dom";
+import { AnimatedSection } from "../../animations/AnimatedSections";
 
 const TAGS_PER_LINE = 3;
 const ARTICLES_PER_PAGE = 9;
@@ -20,6 +21,7 @@ export default function BlogPage() {
           <h1 className="text-4xl font-bold text-white">Blog</h1>
         </div>
       </div>
+      <AnimatedSection>
       {/* Grid de artigos */}
       <div className="max-w-7xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 ">
         {paginated.map(article => (
@@ -65,6 +67,7 @@ export default function BlogPage() {
           ))}
         </div>
       )}
+    </AnimatedSection>
     </div>
   );
 }

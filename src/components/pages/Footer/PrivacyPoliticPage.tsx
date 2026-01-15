@@ -1,4 +1,4 @@
-import { AnimatedSection } from "../animations/AnimatedSections";
+import { AnimatedSection } from "../../animations/AnimatedSections";
 export default function PrivacyPoliticPage() {
   return (
     <AnimatedSection>

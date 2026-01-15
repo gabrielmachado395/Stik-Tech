@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom"; // ou use sua solução de rotas
-import { products } from "../Products";
+import { products } from "../../Products";
 import { Link } from "react-router-dom";
-import { AnimatedSection } from "../animations/AnimatedSections";
-import { CollapsibleMenu } from "../utils/CollapsibleMenu";
+import { AnimatedSection } from "../../animations/AnimatedSections";
+import { CollapsibleMenu } from "../../utils/CollapsibleMenu";
 import { ShoppingBag } from "lucide-react";
-import { useCart } from "../utils/CartContext";
+import { useCart } from "../../utils/CartContext";
 import { useState } from "react";
 
 

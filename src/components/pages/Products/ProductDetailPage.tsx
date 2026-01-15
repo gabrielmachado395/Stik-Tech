@@ -1,11 +1,11 @@
 import { useParams, Link } from "react-router-dom";
-import { CollapsibleMenu } from "../utils/CollapsibleMenu";
-import { products } from "../Products";
-import ProductCard from "../ProductCard";
+import { CollapsibleMenu } from "../../utils/CollapsibleMenu";
+import { products } from "../../Products";
+import ProductCard from "../../ProductCard";
 import { useState } from "react"
 import { ShoppingBag } from "lucide-react";
-import { useCart } from "../utils/CartContext";
-import { AnimatedSection } from "../animations/AnimatedSections";
+import { useCart } from "../../utils/CartContext";
+import { AnimatedSection } from "../../animations/AnimatedSections";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -76,7 +76,7 @@ export default function ProductDetailPage() {
 
           {/* Quantidade e botão */}
           <div className="flex items-center gap-2 mb-4">
-            <div className="flex items-center border rounded px-2 py-1">
+            <div className="flex items-center border rounded-lg px-2 py-1">
                 <button
                 type="button"
                 className="px-2 text-lg text-gray-600 hover:text-[#5483B3] focus:outline-none"

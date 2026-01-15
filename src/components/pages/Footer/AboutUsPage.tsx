@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { container, item } from '../animations/StaggeredEffect';
+import { container, item } from '../../animations/StaggeredEffect';
 
 export default function AboutUsPage() {
   return (

@@ -1,5 +1,7 @@
-import { articles } from "./articlesData";
+import { articles, Article } from "./articlesData";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import 'react-quill/dist/quill.snow.css';
+import {AnimatedSection} from '../../animations/AnimatedSections';
 
 export default function ArticlePage() {
   const { id } = useParams();
@@ -15,43 +17,57 @@ export default function ArticlePage() {
   // Leia também (3 artigos aleatórios, exceto o atual)
   const leiaTambem = articles.filter(a => a.id !== article.id).slice(0, 3);
 
+  function deleteCustomArticle(id: number) {
+        const customArticles = JSON.parse(localStorage.getItem("customArticles") || "[]");
+        const updatedArticles = customArticles.filter((article: { id: number }) => article.id !== id);
+        localStorage.setItem("customArticles", JSON.stringify(updatedArticles));
+      }
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="relative min-h-screen bg-gray-50">
       {/* Banner gradiente */}
-      <div className="w-full h-20 bg-gradient-to-r from-[#7da0ca] to-[#021024] justify-center flex items-end px-8 pb-6">
-        <div>
-          <nav className="text-white text-sm mb-2">
+      <div className="w-full h-60 bg-gradient-to-r from-[#7da0ca] to-[#021024] justify-center flex items-end px-8 pb-6 relative z-0">
+        <div h-full className="h-full">
+          <nav className="text-white text-sm mt-2">
             <Link to="/">Home</Link> &gt; <Link to="/blog">Blog</Link> &gt; <span>{article.title}</span>
           </nav>
         </div>
       </div>
-      <div className="max-w-3xl mx-auto py-10 px-4">
-        <img src={article.image} alt={article.title} className="w-full max-h-96 object-cover rounded-xl mb-6 mx-auto" />
-        <div className="flex flex-wrap gap-2 mb-4">
-          {article.tags.map((tag, idx) => (
-            <span key={tag + idx} className="bg-[#5483B3] text-white px-3 py-1 rounded-full text-xs font-semibold">
-              {tag}
-            </span>
-          ))}
-        </div>
+      <AnimatedSection>
+      <img src={article.image} alt={article.title} className="max-w-3xl max-h-96 object-cover rounded-xl mb-6 mx-auto relative z-10" 
+      style={{ marginTop: '-180px' }}
+      />
+      <div className="flex flex-wrap gap-2 mb-4 mx-auto max-w-3xl">
+        {article.tags.map((tag, idx) => (
+          <span key={tag + idx} className="bg-[#5483B3] text-white px-3 py-1 rounded-full text-xs font-semibold">
+            {tag}
+          </span>
+        ))}
+      </div>
+      <div className="max-w-3xl mx-auto ">
+        {/* <button
+        onClick={() => {deleteCustomArticle(article.id)
+        }}
+        className="flex justify-end items-end object-left-top bg-red-500 text-white px-4 py-2 rounded font-bold ml-4 hover:bg-red-600 transition "
+        >Excluir</button> */}
         <h1 className="text-3xl font-bold text-[#181C23] mb-2  pb-2">{article.title}</h1>
         <div className="text-gray-500 text-sm mb-6 border-b-2 border-gray-200 pb-2">{article.date}</div>
         {/* Conteúdo dinâmico */}
-        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
+        <div className="ql-editor max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
         {/* Navegação entre artigos */}
         <div className="flex justify-between items-center mt-12 mb-8">
           <button
             className={`px-6 py-2 rounded font-bold border ${prev ? "bg-white text-[#5483B3] hover:bg-[#B9D7EA]" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
             disabled={!prev}
             onClick={() => prev && navigate(`/blog/${prev.id}`)}
-          >
+            >
             ANTERIOR
           </button>
           <button
             className={`px-6 py-2 rounded font-bold border ${next ? "bg-white text-[#5483B3] hover:bg-[#B9D7EA]" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
             disabled={!next}
             onClick={() => next && navigate(`/blog/${next.id}`)}
-          >
+            >
             PRÓXIMO
           </button>
         </div>
@@ -83,6 +99,7 @@ export default function ArticlePage() {
           ))}
       </div>
       </div>
+          </AnimatedSection>
     </div>
   );
 }

@@ -96,14 +96,36 @@ export default function CreateArticlePage() {
       }
   
       if (!valid) return;
+      
+      const newArticle = {
+        id: Date.now(),
+        title,
+        image: imagePreview,
+        tags: selectedTags,
+        category: "Estilo",
+        date: new Date().toLocaleDateString("pt-BR", {day: "numeric", month: "long", year: "numeric"}),
+        content, 
+      }
+
+      // Salvar no localStorage
+      const customArticles = JSON.parse(localStorage.getItem("customArticles") || "[]");
+      customArticles.push(newArticle);
+      localStorage.setItem("customArticles", JSON.stringify(customArticles));
   
       // Aqui você pode salvar o artigo (ex: localStorage, arquivo, etc)
       setSuccess("Artigo cadastrado com sucesso!");
       // Limpar campos se desejar
+        // setImage(null);
+        // setImagePreview(null);
+        // setTitle("");
+        // setContent("");
+        // setSelectedTags([]);
+
+      
     };
 
     return (
-        <div className="max-w-5xl mx-80 py-10 px-4">
+        <div className="max-w-3xl mx-auto py-10 px-4">
             <h1 className="text-3xl text-center font-bold mb-8">Cadastrar Artigo</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-6 w-full">
@@ -155,12 +177,14 @@ export default function CreateArticlePage() {
                     <ReactQuill theme="snow" 
                     value={content}
                     onChange={setContent}
-                    className="bg-white"
+                    className="bg-white overflow-auto max-h-70"
                     placeholder="Digite aqui..."
                     modules={{
                         toolbar: [
-                            [{ 'header': [1, 2, false] }],
+                            [{ 'header': [1, 2, 3, false]}],
                             ['bold', 'italic', 'underline','strike', 'blockquote'],
+                            [{'color': [] }, { 'background': [] }],
+                            [{'align': [] }],
                             [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
                             ['link', 'image'],
                             ['clean']
