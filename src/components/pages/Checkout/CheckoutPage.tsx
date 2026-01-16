@@ -2,6 +2,7 @@ import { useCart } from "../../utils/CartContext";
 import { Trash, ShoppingBag} from "lucide-react";
 import {AnimatedSection} from "../../animations/AnimatedSections";
 import { Link } from "react-router-dom";
+import  FooterCheckoutPage  from "./FooterCheckoutPage";
 
 export default function CheckoutPage() {
   const { items, removeItem, updateQuantity, total } = useCart();
@@ -105,7 +106,7 @@ export default function CheckoutPage() {
             </div>
             <Link to="/checkout/payment">
             <button className="w-full mt-2 bg-[#5483B3] hover:bg-[#052659] text-white py-3 rounded font-bold text-lg">
-              Fechar pedido
+              Ir para pagamento
             </button>
             </Link>
             <Link to="/" className="w-full mt-2 text-gray-400 hover:underline font-medium bg-transparent">
@@ -116,7 +117,7 @@ export default function CheckoutPage() {
           </div>
         </div>
       </div>
-      
+      <FooterCheckoutPage />
     </AnimatedSection>
     </div>
   );

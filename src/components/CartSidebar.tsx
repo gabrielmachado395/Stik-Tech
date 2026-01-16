@@ -93,7 +93,7 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
             <span className="font-semibold">R$ {total.toFixed(2)}</span>
           </div>
           <button className="w-full mt-4 bg-[#5483B3] hover:bg-[#052659] text-white py-2 border rounded-lg font-bold">
-            <><a href="/checkout">Ir para o checkout</a></>
+            <><a href="/checkout">Fechar pedido</a></>
           </button>
           <button className="w-full mt-4  hover:bg-[#e0e0e0] text-gray-700 py-2 border rounded-lg font-bold">
             <a href="/">Continuar comprando</a>

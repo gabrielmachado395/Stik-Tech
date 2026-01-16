@@ -1,11 +1,22 @@
 import { useParams } from "react-router-dom"; // ou use sua solução de rotas
 import { products } from "../../Products";
 import { Link } from "react-router-dom";
+import ProductCard from "../../ProductCard";
 import { AnimatedSection } from "../../animations/AnimatedSections";
 import { CollapsibleMenu } from "../../utils/CollapsibleMenu";
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "../../utils/CartContext";
-import { useState } from "react";
+import React, { useState, useRef } from "react";
+const ORDER_OPTIONS = [
+  { label: "Relevância", value: "relevancia" },
+  { label: "Mais vendidos", value: "mais-vendidos" },
+  { label: "Mais recentes", value: "mais-recentes" },
+  { label: "Desconto", value: "desconto" },
+  { label: "Preço: Do maior para o menor", value: "preco-desc" },
+  { label: "Preço: Do menor para o maior", value: "preco-asc" },
+  { label: "Nome em ordem crescente", value: "nome-asc" },
+  { label: "Nome em ordem decrescente", value: "nome-desc" },
+];
 
 
 
@@ -37,14 +48,54 @@ export default function CategoryPage() {
   // Estado para controlar quantos produtos mostrar
   const [visibleCount, setVisibleCount] = useState(12);
 
-  const produtosVisiveis = produtosFiltrados.slice(0, visibleCount);
+  // Estado para ordenação
+  const [order, setOrder] = useState("relevancia");
+  const [orderOpen, setOrderOpen] = useState(false);
+  const orderRef = useRef<HTMLDivElement>(null);
+
+  // Ordenação dos produtos
+  function sortProducts(list: typeof products) {
+    switch (order) {
+      case "preco-asc":
+        return [...list].sort((a, b) => a.preco - b.preco);
+      case "preco-desc":
+        return [...list].sort((a, b) => b.preco - a.preco);
+      case "nome-asc":
+        return [...list].sort((a, b) => a.nome.localeCompare(b.nome));
+      case "nome-desc":
+        return [...list].sort((a, b) => b.nome.localeCompare(a.nome));
+      // Adicione lógica para outras opções se necessário
+      default:
+        return list;
+    }
+  }
+
+  const produtosOrdenados = sortProducts(produtosFiltrados);
+  const produtosVisiveis = produtosOrdenados.slice(0, visibleCount);
+
+  // Fecha o menu ao clicar fora
+  React.useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (orderRef.current && !orderRef.current.contains(event.target as Node)) {
+        setOrderOpen(false);
+      }
+    }
+    if (orderOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [orderOpen]);
 
   return (
-    <AnimatedSection>
     <div className=" min-h-screen pb-20">
       {/* Banner */}
       <div className="w-full h-48 md:h-64 bg-cover bg-center flex items-end" style={{ backgroundImage: "url('/img/categoria-banner.webp')" }}>
       </div>
+      <AnimatedSection>
 
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-center">
@@ -85,39 +136,46 @@ export default function CategoryPage() {
             <span className="font-semibold text-base">
               {produtosFiltrados.length} Produtos Encontrados
             </span>
-            {/* Dropdown de ordenação pode ser adicionado aqui */}
+            {/* Dropdown de ordenação */}
+            <div className="relative" ref={orderRef}>
+              <button
+                className="flex items-center gap-2 px-4 py-2 border-b border-gray-300 text-gray-700 font-medium focus:outline-none min-w-[180px]"
+                onClick={() => setOrderOpen((v) => !v)}
+                type="button"
+              >
+                Ordenar por <span className="font-bold">{ORDER_OPTIONS.find(opt => opt.value === order)?.label}</span>
+                <svg className={`w-4 h-4 ml-1 transition-transform ${orderOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {orderOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded shadow-lg z-20">
+                  {ORDER_OPTIONS.map(opt => (
+                    <button
+                      key={opt.value}
+                      className={`block w-full text-left px-4 py-2 hover:bg-[#f0f4fa] ${order === opt.value ? 'bg-gray-100 font-semibold' : ''}`}
+                      onClick={() => { setOrder(opt.value); setOrderOpen(false); }}
+                      type="button"
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Grid de produtos */}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {produtosVisiveis.map(prod => (
-              <Link to={`/produto/${prod.id}`} key={prod.nome} className="no-underline">
-              <div key={prod.nome} className=" w-full rounded-lg shadow hover:shadow-xl transition-shadow flex flex-col border border-gray-100">
-                <img src={prod.imagem} alt={prod.nome} className="w-full h-full rounded-t-sm" />
-                <div className="p-4 flex flex-col flex-1">
-                  <h3 className="font-semibold mb-1">{prod.nome}</h3>
-                  {prod.preco && (
-                    <span className="text-[#5483B3] font-bold text-lg mb-2">R$ {prod.preco.toFixed(2)}</span>
-                  )}
-                  <button 
-                  className="bg-[#5483B3] text-white px-4 py-2 rounded hover:bg-[#052659] transition flex items-center justify-center gap-2"
-                  onClick={e => {
-                    e.preventDefault();
-                    addItem({
-                      id: String(prod.id),
-                      name: prod.nome,
-                      image: prod.imagem,
-                      price: prod.preco,
-                      quantity: 1,
-                  })
-                  }}
-                  >
-                    <ShoppingBag className="w-4 h-4" />
-                    Adicionar à Sacola
-                    </button>
-                </div>
-              </div>
-              </Link>
+              <ProductCard
+                key={prod.id}
+                id={prod.id}
+                nome={prod.nome}
+                preco={prod.preco}
+                // originalPrice={prod.originalPrice}
+                imagem={prod.imagem}
+                // isNew={prod.isNew}
+                // discount={prod.discount}
+              />
             ))}
           </div>
           {/* Botão Carregar Mais */}
@@ -133,7 +191,7 @@ export default function CategoryPage() {
           )}
         </main>
       </div>
-    </div>
     </AnimatedSection>
+    </div>
   );
 }

@@ -26,12 +26,9 @@ import LoginConfirmationEmail from './components/pages/Login/LoginConfirmationEm
 import { AuthProvider } from './components/utils/AuthContext';
 import { ProtectedRoute } from './components/utils/ProtectedRoute';
 import PaymentPage from './components/pages/Checkout/PaymentPage';
-
-
-
+import FavoriteProductsPage from './components/pages/Products/FavoriteProductsPage';
 
 const newReleases = products.slice(0,8)
-
 
 const bestSellers = products.filter(p => p.categoria === "Premium").slice(0,8);
 
@@ -80,22 +77,27 @@ function App() {
         <Route path="/politica-de-privacidade" element={<PrivacyPoliticPage />} />
         <Route path="/perguntas-frequentes" element={<FAQ />} />
         <Route path="/criar-artigo" element={
-          <ProtectedRoute>
+          // <ProtectedRoute>
             <CreateArticlePage />
-          </ProtectedRoute>
+          // </ProtectedRoute>
         } />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:id" element={<ArticlePage />} />
         <Route path="/meus-pacotes" element={<MyPackages />} />
         <Route path="/checkout" element={
-          <ProtectedRoute>
+          // <ProtectedRoute>
             <CheckoutPage />
-          </ProtectedRoute>
+          // </ProtectedRoute>
         } 
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register/confirmation" element={<LoginConfirmationEmail />} />
         <Route path="/checkout/payment" element={<PaymentPage />} />
+        <Route path="/favoritos" element={
+          // <ProtectedRoute>
+          <FavoriteProductsPage />} 
+          // </ProtectedRoute>
+          />
       </Routes>
       {/* Só mostra o carrosel se não for na página de checkout */}
       {!isCheckoutPage && !isLoginPage && !isLoginConfirmationPage && !isPaymentPage && (

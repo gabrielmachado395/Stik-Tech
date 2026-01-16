@@ -34,7 +34,7 @@ export default function ArticlePage() {
         </div>
       </div>
       <AnimatedSection>
-      <img src={article.image} alt={article.title} className="max-w-3xl max-h-96 object-cover rounded-xl mb-6 mx-auto relative z-10" 
+      <img src={article.image} alt={article.title} className="md:max-w-3xl max-h-96 object-cover rounded-xl mb-6 mx-auto relative z-10" 
       style={{ marginTop: '-180px' }}
       />
       <div className="flex flex-wrap gap-2 mb-4 mx-auto max-w-3xl">

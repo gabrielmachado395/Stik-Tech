@@ -47,11 +47,9 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Localização</h4>
             <p className="space-y-2 text-sm">
-              Rua Professor Vieira - Autran Nunes, Fortaleza - CE, 60526-450
+              Rua Professor Vieira, 400 - Autran Nunes, Fortaleza - CE, 60526-450
             </p>
           </div>
-
-         
 
         </div>
 

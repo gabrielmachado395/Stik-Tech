@@ -1,6 +1,8 @@
-import { Heart, ShoppingBag, } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Heart, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from './utils/CartContext';
+import { addFavorite, removeFavorite, isFavorite } from './utils/Favorites';
 
 interface ProductCardProps {
   id: number;
@@ -12,8 +14,13 @@ interface ProductCardProps {
   discount?: number;
 }
 
-export default function ProductCard({id, nome, preco, originalPrice, imagem, isNew, discount }: ProductCardProps) {
+export default function ProductCard({ id, nome, preco, originalPrice, imagem, isNew, discount }: ProductCardProps) {
   const { addItem } = useCart();
+  const [favorite, setFavorite] = useState(false);
+
+  useEffect(() => {
+    setFavorite(isFavorite(id));
+  }, [id]);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -24,7 +31,19 @@ export default function ProductCard({id, nome, preco, originalPrice, imagem, isN
       price: preco,
       quantity: 1,
     });
-  }
+  };
+
+  const handleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (favorite) {
+      removeFavorite(id);
+      setFavorite(false);
+    } else {
+      addFavorite({ id, title:nome, price:preco, originalPrice, image:imagem, isNew, discount });
+      setFavorite(true);
+    }
+  };
+
   return (
     <Link to={`/produto/${id}`} className="no-underline ">
       <div className="group relative rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-100 ">
@@ -40,16 +59,24 @@ export default function ProductCard({id, nome, preco, originalPrice, imagem, isN
         )}
 
         <div className="relative aspect-square bg-white-100 overflow-hidden">
-          <img 
-          src={imagem} 
-          alt={nome} 
-          className="w-full h-full object-cover" 
-          loading="lazy" 
+          <img
+            src={imagem}
+            alt={nome}
+            className="w-full h-full object-cover"
+            loading="lazy"
           />
-          
 
-          <button className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-2 shadow-md hover:bg-gray-50">
-            <Heart className="w-5 h-5 text-gray-700" />
+          <button
+            className={`absolute top-2 right-2 transition-opacity bg-white rounded-full p-2 shadow-md 
+              ${favorite ? ' opacity-100' : 'opacity-0 group-hover:opacity-100'}
+            `}
+            onClick={handleFavorite}
+            title={favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+          >
+            <Heart
+              className={`w-5 h-5 ${favorite ? ' text-[#5483B3] fill-[#5483B3]' : 'text-gray-700'}`}
+              fill={favorite ? '#fff' : 'none'}
+            />
           </button>
         </div>
 
@@ -68,7 +95,7 @@ export default function ProductCard({id, nome, preco, originalPrice, imagem, isN
           </div>
 
           <button className="w-full bg-[#5483B3] text-white py-2 rounded-lg font-medium hover:bg-[#052659] transition flex items-center justify-center gap-2"
-          onClick={handleAddToCart}>
+            onClick={handleAddToCart}>
             <ShoppingBag className="w-4 h-4" />
             Adicionar
           </button>

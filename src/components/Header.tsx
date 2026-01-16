@@ -1,4 +1,4 @@
-import { Heart, User, Menu, ShoppingBag } from 'lucide-react';
+import { Heart, User, ShoppingBag } from 'lucide-react';
 import { useGoTo } from './utils/navigation';
 import CartSidebar from './CartSidebar';
 import { useCart } from './utils/CartContext';
@@ -51,10 +51,12 @@ export default function Header() {
               <span className="text-xs hidden sm:block">Conta</span>
             </button>
             </Link>
+            <Link to="/favoritos">
             <button className="flex flex-col items-center text-gray-700 hover:text-[#769FCD]">
               <Heart className="w-6 h-6" />
               <span className="text-xs hidden sm:block">Favoritos</span>
             </button>
+            </Link>
             <button className="flex flex-col items-center text-gray-700 hover:text-[#769FCD] relative"
               onClick={() => setCartOpen(true)}
               >
