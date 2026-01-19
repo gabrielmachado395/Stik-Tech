@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import ProductCard from "../../ProductCard";
 import { AnimatedSection } from "../../animations/AnimatedSections";
 import { CollapsibleMenu } from "../../utils/CollapsibleMenu";
-import { ShoppingBag } from "lucide-react";
 import { useCart } from "../../utils/CartContext";
 import React, { useState, useRef } from "react";
+import { CATEGORIES } from "../../utils/categories";
 const ORDER_OPTIONS = [
   { label: "Relevância", value: "relevancia" },
   { label: "Mais vendidos", value: "mais-vendidos" },
@@ -17,22 +17,6 @@ const ORDER_OPTIONS = [
   { label: "Nome em ordem crescente", value: "nome-asc" },
   { label: "Nome em ordem decrescente", value: "nome-desc" },
 ];
-
-
-
-const CATEGORIES = [
-  { name: "Elásticos Crus", slug: "elasticos-crus"},
-  { name: "Modeladores", slug: "modeladores"},
-  { name: "Alças", slug: "alcas"},
-  { name: "Bases", slug: "bases"},
-  { name: "Viés", slug: "vies"},
-  { name: "Premium", slug: "premium"},
-  { name: "Rendas", slug: "rendas"},
-  { name: "Personalizados", slug: "personalizados"}
-];
-
-
-
 export default function CategoryPage() {
   // Exemplo: useParams retorna { categoria: "Personalizados" }
   const { categoria } = useParams<{ categoria: string }>();
@@ -43,7 +27,7 @@ export default function CategoryPage() {
   const produtosFiltrados = products.filter(
     (p) => p.categoria === categoriaAtual
   );
-  const {addItem} = useCart();
+  useCart();
   
   // Estado para controlar quantos produtos mostrar
   const [visibleCount, setVisibleCount] = useState(12);
@@ -93,7 +77,8 @@ export default function CategoryPage() {
   return (
     <div className=" min-h-screen pb-20">
       {/* Banner */}
-      <div className="w-full h-48 md:h-64 bg-cover bg-center flex items-end" style={{ backgroundImage: "url('/img/categoria-banner.webp')" }}>
+      <div className="w-full h-20 md:h-40 bg-cover bg-center flex items-center bg-gradient-to-r from-[#141e30] to-[#35577d] " >
+        <h1 className="text-white text-3xl md:text-4xl font-bold p-6 flex items-center justify-center mx-auto">{categoriaAtual}</h1>
       </div>
       <AnimatedSection>
 

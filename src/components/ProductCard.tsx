@@ -46,7 +46,7 @@ export default function ProductCard({ id, nome, preco, originalPrice, imagem, is
 
   return (
     <Link to={`/produto/${id}`} className="no-underline ">
-      <div className="group relative rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-100 ">
+      <div className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100 ">
         {isNew && (
           <span className="absolute top-2 left-2 bg-[#5483B3] text-white text-xs px-3 py-1 rounded-full z-10">
             NOVO

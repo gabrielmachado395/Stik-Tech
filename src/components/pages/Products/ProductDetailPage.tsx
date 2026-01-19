@@ -54,7 +54,7 @@ export default function ProductDetailPage() {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Imagens */}
         <div className="flex flex-col gap-2 md:w-1/3">
-          <img src={product.imagem} alt={product.nome} className="w-full rounded-lg shadow" />
+          <img src={product.imagem} alt={product.nome} className="w-full  rounded-lg shadow" />
           {/* Miniaturas (pode adicionar mais imagens depois) */}
           <div className="flex gap-2">
             <img src={product.imagem} alt={product.nome} className="w-16 h-16 rounded border" />
@@ -70,8 +70,8 @@ export default function ProductDetailPage() {
 
           {/* Simulação de cor/tamanho */}
           <div className="my-4 flex gap-2 justify-start items-center">
-            <span className="text-ms text-gray-600">Tamanho:</span>
-            <button className="border rounded px-2 py-1">Carretel C/ 100 Metros</button>
+            {/* <span className="text-ms text-gray-600">Tamanho:</span>
+            <button className="border rounded px-2 py-1">Carretel C/ 100 Metros</button> */}
           </div>
 
           {/* Quantidade e botão */}

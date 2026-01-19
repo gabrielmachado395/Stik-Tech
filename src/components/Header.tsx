@@ -76,15 +76,14 @@ export default function Header() {
         </div>
         {/* Menu de navegação */}
         <nav className="hidden lg:flex mt-4 justify-center gap-6 text-sm font-medium">
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/lancamentos')}>LANÇAMENTOS</a>
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/elasticos-crus')}>ELÁSTICOS CRUS</a>
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/modeladores')}>MODELADORES</a>
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/alcas')}>ALÇAS</a>
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/bases')}>BASES</a>
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/vies')}>VIÉS</a>
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/premium')}>PREMIUM</a>
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/rendas')}>RENDAS</a>
-          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/personalizados')}>PERSONALIZADOS</a>
+          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/automotivo')}>Automotivo</a>
+          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/beleza-e-cuidados-pessoais')}>Beleza e Cuidados Pessoais</a>
+          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/brinquedos-e-jogos')}>Brinquedos e Jogos</a>
+          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/casa-jardim-limpeza')}>Casa, Jardim e Limpeza</a>
+          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/cozinha')}>Cozinha</a>
+          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/eletronicos-tv-audio')}>Eletrônicos, TV e Áudio</a>
+          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/esportes-aventura-lazer')}>Esportes, Aventura e Lazer</a>
+          <a href="#" className="text-gray-700 hover:text-[#769FCD] transition" onClick={() => goTo('/categorias/ferramentas-e-construcao')}>Ferramentas e Construção</a>
         </nav>
       </div>
         

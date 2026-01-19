@@ -20,7 +20,7 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
       />
       {/* Sidebar animada */}
       <div 
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 duration-300 flex flex-col
+        className={`fixed top-0 right-0 h-full w-1/3 bg-white shadow-lg z-50 duration-300 flex flex-col
         ${open ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
         style={{ willChange: "transform, opacity" }}
       >

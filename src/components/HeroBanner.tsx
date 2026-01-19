@@ -2,9 +2,9 @@ import { useRef, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
-  "/img/tumb-blog-01.jpg",
-  "/img/thumb-blog-09-1024x683.jpg",
-  "/img/thumb-blog-17-1.jpg",
+  "/img/hero-banner.jpg",
+  "/img/hero-banner2.jpg",
+  "/img/hero-banner3.jpg",
 ];
 
 export default function HeroBanner() {
@@ -33,7 +33,7 @@ export default function HeroBanner() {
   const next = () => setIndex((prev) => (prev + 1) % images.length);
 
   return (
-    <section className="relative h-[450px] md:h-[600px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-[300px] md:h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <div 
             ref={carouselRef}
@@ -48,7 +48,7 @@ export default function HeroBanner() {
                 key={src}
                 src={src}
                 alt={`Coleção ${i + 1}`}
-                className="w-full h-full object-cover flex-shrink-0 transition-opacity duration-700"
+                className="w-full h-full flex-shrink-0 transition-opacity duration-700 items-center justify-center"
                 style={{
                   minWidth: "100%",
                   scrollSnapAlign: 'start',
