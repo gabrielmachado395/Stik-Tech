@@ -21,6 +21,10 @@ import LoginConfirmationEmail from './components/pages/Login/LoginConfirmationEm
 import { AuthProvider } from './components/utils/AuthContext';
 import PaymentPage from './components/pages/Checkout/PaymentPage';
 import FavoriteProductsPage from './components/pages/Products/FavoriteProductsPage';
+import SellWithUsPage from './components/pages/Seller/SellWithUsPage';
+import LoginSellWithUs from './components/pages/Seller/LoginSellWithUs';
+import AddNewProduct from './components/pages/Seller/AddNewProduct';
+import { ProtectedRoute } from './components/utils/ProtectedRoute';
 
 function HomePage() {
   // Conteúdo da home
@@ -39,17 +43,20 @@ function HomePage() {
 function App() {
   const location = useLocation();
 
-  // Função para verificar se está na página de checkout
+  // Função para verificar a página atual
   const isCheckoutPage = location.pathname === "/checkout";
   const isLoginPage = location.pathname === "/login";
   const isLoginConfirmationPage = location.pathname === "/register/confirmation";
   const isPaymentPage = location.pathname === "/checkout/payment";
+  const isSellWithUsPage = location.pathname.startsWith("/venda-com-a-gente");
+  const isLoginSellWithUsPage = location.pathname.startsWith("/venda-com-a-gente/login");
+  const isAddNewProductPage = location.pathname.startsWith("/venda-com-a-gente/adicionar-produto");
 
   return (
     <AuthProvider>
     <div className="min-h-screen flex flex-col bg-white-50">
       <ScrollToTop/>
-      { !isLoginPage && !isLoginConfirmationPage && !isPaymentPage && (<Header />)}
+      { !isLoginPage && !isLoginConfirmationPage && !isPaymentPage && !isSellWithUsPage && !isLoginSellWithUsPage && (<Header />)}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/categorias/:categoria" element={<CategoryPage />} />
@@ -74,13 +81,20 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register/confirmation" element={<LoginConfirmationEmail />} />
         <Route path="/checkout/payment" element={<PaymentPage />} />
+        <Route path="/venda-com-a-gente" element={<SellWithUsPage />} />
         <Route path="/favoritos" element={
           // <ProtectedRoute>
           <FavoriteProductsPage />} 
           // </ProtectedRoute>
           />
+        <Route path="/venda-com-a-gente/login" element={<LoginSellWithUs />} />
+        <Route path="/venda-com-a-gente/adicionar-produto" element={
+          // <ProtectedRoute>
+          <AddNewProduct />
+          // </ProtectedRoute>
+          } />
       </Routes>
-      {!isCheckoutPage && !isLoginPage && !isLoginConfirmationPage && !isPaymentPage && (<Footer />)}
+      {!isCheckoutPage && !isLoginPage && !isLoginConfirmationPage && !isPaymentPage && !isLoginSellWithUsPage && (<Footer />)}
     </div>
     </AuthProvider>
   );

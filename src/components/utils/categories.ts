@@ -4,7 +4,6 @@ export type Category = {
 };
 
 export const CATEGORIES: Category[] = [
-  { name: 'Alimentos e Bebidas', slug: 'alimentos-e-bebidas' },
   { name: 'Automotivo', slug: 'automotivo' },
   { name: 'Bebês', slug: 'bebes' },
   { name: 'Beleza e Cuidados Pessoais', slug: 'beleza-e-cuidados-pessoais' },

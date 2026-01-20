@@ -12,7 +12,7 @@ export default function FavoriteProductsPage() {
   }, []);
 
   const filtered = favorites.filter(product =>
-    product.title?.toLowerCase().includes(search.toLowerCase())
+    product.nome?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -38,12 +38,13 @@ export default function FavoriteProductsPage() {
             <ProductCard
               key={product.id}
               id={product.id}
-              nome={product.title} // mapeando para o nome esperado pelo ProductCard
-              preco={product.price}
+              nome={product.nome} // mapeando para o nome esperado pelo ProductCard
+              preco={product.preco}
               originalPrice={product.originalPrice}
-              imagem={product.image}
+              imagem={product.imagem}
               isNew={product.isNew}
               discount={product.discount}
+              cores={product.cores}
             />
           ))}
         </div>

@@ -1,0 +1,68 @@
+========================
+ROADMAP SISTEMA VENDEDOR
+========================
+
+BLOCO 1: AUTENTICAÇÃO E CADASTRO DE VENDEDOR
+--------------------------------------------
+1.1. Criar tela de login/cadastro de vendedor (já existente).
+1.2. Permitir login com credenciais de cliente Stik Tech (se já tiver conta).
+1.3. Cadastro de vendedor exige: Nome, Email, Senha, Confirmação de Senha, CNPJ.
+1.4. (Opcional) Integrar API de consulta de CNPJ para preencher dados da empresa automaticamente.
+1.5. Salvar dados fictícios do vendedor no localStorage (nome, email, senha, CNPJ, dados da empresa).
+1.6. Implementar logout e validação de sessão do vendedor.
+
+BLOCO 2: PAINEL DO VENDEDOR
+---------------------------
+2.1. Criar página/painel para o vendedor após login.
+2.2. Exibir dados básicos do vendedor e empresa.
+2.3. Botão para cadastrar novo produto.
+2.4. Listar produtos já cadastrados pelo vendedor (dados do localStorage).
+
+BLOCO 3: CADASTRO DE PRODUTO
+----------------------------
+3.1. Formulário para cadastro de produto com os campos:
+     - Imagem(s) (upload/simulação)
+     - Nome
+     - SKU
+     - Preço
+     - Descrição
+     - Cores (lista/multiseleção)
+     - Lançamento (checkbox)
+     - Desconto (checkbox, se marcado: mostrar campos de preço original e novo preço)
+     - Categoria (selecionar existente ou criar nova)
+3.2. Salvar produto no localStorage, vinculado ao vendedor logado.
+3.3. Exibir feedback de sucesso/erro ao cadastrar produto.
+3.4. O produto cadastrado deve ficar formatado no estilo do ProductCard e automaticamente ser inserido dentro da sua determinada página de categoria. na tela de detalhes dele ele deve ser formatado no formato atual da tela de detalhes de produtos. caso tenha promoção o produto deve mostrar o preço novo e o preço antigo riscado
+3.5. Filtro de mais recentes agora pode ser aplicado
+
+BLOCO 4: EDIÇÃO E REMOÇÃO DE PRODUTOS
+-------------------------------------
+4.1. Permitir que o vendedor edite seus próprios produtos.
+4.2. Permitir que o vendedor remova produtos.
+4.3. Atualizar localStorage após edição/remoção.
+
+BLOCO 5: SIMULAÇÃO DE VENDA
+---------------------------
+5.1. (Opcional) Adicionar botão para simular venda de produto.
+5.2. Exibir quantidade vendida por produto (simulação).
+
+BLOCO 6: EVOLUÇÃO FUTURA
+------------------------
+6.1. Migrar dados do localStorage para backend (API REST/Firebase).
+6.2. Implementar validações avançadas (e-mail único, senha forte, etc).
+6.3. Adicionar permissões e níveis de acesso.
+6.4. Implementar upload real de imagens.
+6.5. Adicionar relatórios de vendas, pedidos, clientes.
+6.6. Implementar recuperação de senha, confirmação por e-mail, autenticação 2FA.
+
+========================
+Observações de Segurança
+========================
+- Para cadastro de empresa via CNPJ, utilize APIs oficiais (ex: ReceitaWS) e valide os dados recebidos.
+- Nunca salve senhas em texto puro (mesmo em simulação, prefira hash).
+- Implemente validação de campos obrigatórios e feedback ao usuário.
+- No futuro, proteja rotas e dados sensíveis com autenticação JWT ou similar.
+
+========================
+Fim do Roadmap
+========================

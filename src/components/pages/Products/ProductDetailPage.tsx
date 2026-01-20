@@ -2,48 +2,60 @@ import { useParams, Link } from "react-router-dom";
 import { CollapsibleMenu } from "../../utils/CollapsibleMenu";
 import { products } from "../../Products";
 import ProductCard from "../../ProductCard";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "../../utils/CartContext";
 import { AnimatedSection } from "../../animations/AnimatedSections";
+import type { ProductColor } from "../../utils/productColors";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const product = products.find(p => p.id === Number(id));
-  // const [showFullDesc, setShowFullDesc] = useState(false);
   const [cep, setCep] = useState("");
   const [frete, setFrete] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
-  
+  const [selectedColor, setSelectedColor] = useState<ProductColor | null>(null);
+  const [mainImage, setMainImage] = useState(
+    Array.isArray(product?.imagem) ? product.imagem[0] : product?.imagem
+  );
+
   if (!product) {
-        return <div className="max-w-7xl mx-auto px-4 py-8">Produto não encontrado.</div>;
-    }
-    
-    // Pega a primeira frase da descrição
-    const descShort = product.descricao.split('. ')[0] + '.';
-    
-    const recomendados = products
+    return <div className="max-w-7xl mx-auto px-4 py-8">Produto não encontrado.</div>;
+  }
+
+  const productColors = product.cores ?? [];
+
+  useEffect(() => {
+    const colors = product?.cores ?? [];
+    if (colors.length > 0) setSelectedColor(colors[0]);
+    else setSelectedColor(null);
+  }, [product?.id]);
+
+  // Pega a primeira frase da descrição
+  const descShort = product.descricao.split('. ')[0] + '.';
+
+  const recomendados = products
     .filter(p => p.categoria === product.categoria && p.id !== product.id)
     .slice(0, 8);
-    
-    // Função para calcular frete (simples simulação)
-    const calcularFrete = () => {
-      setFrete(19.90); // Valor fixo para simulação
-    }
 
-    const { addItem } = useCart();
-    const handleAddToCart = () => {
-        addItem({
-            id: String(product.id),
-            name: product.nome,
-            image: product.imagem,
-            price: product.preco,
-            quantity: quantity,
-        });
-    }
-    return (
+  // Função para calcular frete (simples simulação)
+  const calcularFrete = () => {
+    setFrete(19.90); // Valor fixo para simulação
+  };
+
+  const { addItem } = useCart();
+  const handleAddToCart = () => {
+    addItem({
+      id: String(product.id),
+      name: product.nome,
+      image: Array.isArray(product.imagem) ? product.imagem[0] : product.imagem,
+      price: product.preco,
+      quantity: quantity,
+    });
+  };
+  return (
     <AnimatedSection>
-    <div className="w-full max-w-7xl mx-auto px-4 py-8">
+      <div className="w-full max-w-7xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <nav className=" text-center text-ms  text-gray-500 mb-4">
         <Link to="/" className="hover:underline">Home</Link> &gt;{" "}
@@ -54,10 +66,18 @@ export default function ProductDetailPage() {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Imagens */}
         <div className="flex flex-col gap-2 md:w-1/3">
-          <img src={product.imagem} alt={product.nome} className="w-full  rounded-lg shadow" />
-          {/* Miniaturas (pode adicionar mais imagens depois) */}
+          <img src={mainImage} alt={product.nome} className="w-full rounded-lg shadow transition-transform duration-200 hover:scale-105" />
+          {/* Miniaturas */}
           <div className="flex gap-2">
-            <img src={product.imagem} alt={product.nome} className="w-16 h-16 rounded border" />
+            {(Array.isArray(product.imagem) ? product.imagem : [product.imagem]).map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                alt={product.nome}
+                className={`w-16 h-16 rounded border cursor-pointer ${mainImage === img ? 'ring-2 ring-[#5483B3]' : ''}`}
+                onClick={() => setMainImage(img)}
+              />
+            ))}
           </div>
         </div>
 
@@ -72,6 +92,25 @@ export default function ProductDetailPage() {
           <div className="my-4 flex gap-2 justify-start items-center">
             {/* <span className="text-ms text-gray-600">Tamanho:</span>
             <button className="border rounded px-2 py-1">Carretel C/ 100 Metros</button> */}
+            <span className="text-ms text-gray-600">Cor:</span>
+            {productColors.length === 0 ? (
+              <span className="text-sm text-gray-500">Não informado</span>
+            ) : (
+              <div className="flex flex-wrap items-center gap-2">
+                {productColors.map((c) => (
+                  <button
+                    key={`${c.nome}-${c.hex}`}
+                    type="button"
+                    className={`flex items-center gap-2 px-2 py-1 rounded-full border bg-white hover:bg-gray-50 transition ${selectedColor?.hex === c.hex && selectedColor?.nome === c.nome ? ' border-[#5483B3]' : 'border-gray-200'}`}
+                    onClick={() => setSelectedColor(c)}
+                    title={c.hex}
+                  >
+                    <span className="w-4 h-4 rounded-full border" style={{ backgroundColor: c.hex }} />
+                    <span className="text-sm text-gray-700">{c.nome}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Quantidade e botão */}

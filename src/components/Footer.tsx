@@ -37,7 +37,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Ganhe dinheiro conosco</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/perguntas-frequentes" className="hover:text-[#08407a] transition">Venda com a Stik Tech</a></li>
+              <li><a href="/venda-com-a-gente" className="hover:text-[#08407a] transition">Venda com a Stik Tech</a></li>
               <li><a href="/meus-pacotes" className="hover:text-[#08407a] transition">Seja um Associado</a></li>
               <li><a href="/politica-de-privacidade" className="hover:text-[#08407a] transition">Anuncie seus produtos</a></li>
               {/* <li><a href="#" className="hover:text-[#08407a] transition">Tabela de Medidas</a></li> */}

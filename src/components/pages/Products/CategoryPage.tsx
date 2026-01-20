@@ -40,6 +40,13 @@ export default function CategoryPage() {
   // Ordenação dos produtos
   function sortProducts(list: typeof products) {
     switch (order) {
+      case "mais-recentes":
+        return [...list].sort((a, b) => {
+          const aTime = a.createdAt ?? 0;
+          const bTime = b.createdAt ?? 0;
+          if (bTime !== aTime) return bTime - aTime;
+          return (b.id ?? 0) - (a.id ?? 0);
+        });
       case "preco-asc":
         return [...list].sort((a, b) => a.preco - b.preco);
       case "preco-desc":
@@ -156,10 +163,11 @@ export default function CategoryPage() {
                 id={prod.id}
                 nome={prod.nome}
                 preco={prod.preco}
-                // originalPrice={prod.originalPrice}
+                originalPrice={prod.originalPrice}
                 imagem={prod.imagem}
-                // isNew={prod.isNew}
-                // discount={prod.discount}
+                cores={prod.cores}
+                // isLaunch={prod.isLaunch}
+                // hasDiscount={prod.hasDiscount}
               />
             ))}
           </div>

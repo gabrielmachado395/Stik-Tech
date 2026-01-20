@@ -16,16 +16,8 @@ import {
   getHighlightsInSports,
 } from './Products';
 import { CATEGORIES, getCategoryHrefByName } from './utils/categories';
+import type { Product } from './Products';
 
-type Product = {
-  id: number;
-  nome: string;
-  preco: number;
-  originalPrice?: number;
-  imagem: string;
-  isNew?: boolean;
-  discount?: number;
-};
 
 const CATEGORY_IMAGES_BY_NAME: Record<string, string> = {
   'Automotivo': '/img/Categorias/Automotivo/automotivo.jpg',
@@ -49,7 +41,7 @@ const CATEGORY_IMAGES_BY_NAME: Record<string, string> = {
 };
 
 const highlights: Array<{ title: string; categoryName: string; products: Product[] }> = [
-  { title: 'Mais Vendidos em Moda', categoryName: 'Roupas, Calçados e Acessórios', products: getBestSellersInFashion() },
+  { title: 'Mais Vendidos em Moda', categoryName: 'Roupas, Calçados e Acessórios', products: getBestSellersInFashion()  },
   { title: 'Mais Vendidos em Casa', categoryName: 'Casa, Jardim e Limpeza', products: getBestSellersInHome() },
   { title: 'Melhores Preços em Papelaria', categoryName: 'Papelaria e Escritório', products: getBestPricesInStationery() },
   { title: 'Mais Bem Avaliados em Beleza', categoryName: 'Beleza e Cuidados Pessoais', products: getTopRatedInBeauty() },
@@ -126,7 +118,7 @@ export default function CategorySection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           {CATEGORIES.map((cat) => (
-            <motion.div key={cat.slug} className="flex flex-col items-center w-24 md:w-32" variants={item}>
+            <motion.div key={cat.slug} className="flex flex-col items-center mx-2 w-24 md:w-32" variants={item}>
               <div
                 onClick={() => goTo(`/categorias/${cat.slug}`)}
                 className="w-24 h-24 hover:shadow-xl transition-shadow md:w-40 md:h-40 overflow-hidden shadow-md border-2 border-gray-200 mb-2 bg-gray-100 flex items-center justify-center"

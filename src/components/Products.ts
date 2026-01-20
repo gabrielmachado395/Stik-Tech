@@ -1,12 +1,41 @@
+import type { ProductColor } from "./utils/productColors";
+import { coerceColors } from "./utils/productColors";
+
 export type Product = {
-    id: number,
-    nome: string,
-    categoria: string,
-    slug: string,
-    imagem: string,
-    descricao: string,
-    material: string,
-    preco: number,
+  id: number;
+  nome: string;
+  categoria: string;
+  slug: string;
+  imagem: string | string[]; // Agora pode ser uma string (antigo) ou array de base64
+  descricao: string;
+  material: string; // Pode ser "N/A" se não usado
+  preco: number;
+    cores?: ProductColor[]; // Lista de cores (nome + hex)
+    createdAt?: number; // timestamp (ms) para ordenação por mais recentes
+  isLaunch?: boolean; // Lançamento
+  hasDiscount?: boolean; // Produto em promoção
+  originalPrice?: number; // Preço original (se desconto)
+  discountPrice?: number; // Novo preço (se desconto)
+  sku?: string;
+};
+
+function getProdutosVendedor(): Product[] {
+  try {
+    const data = localStorage.getItem("produtosVendedor");
+    if (!data) return [];
+    const arr = JSON.parse(data);
+    // Validação básica para garantir compatibilidade
+        if (Array.isArray(arr)) {
+            return arr.map((p) => {
+                if (!p || typeof p !== "object") return p;
+                const cores = coerceColors((p as any).cores);
+                return { ...(p as any), cores } as Product;
+            });
+        }
+    return [];
+  } catch {
+    return [];
+  }
 }
 
 const CATEGORY_IMAGES: Record<string, string[]> = {
@@ -1827,8 +1856,6 @@ const rawProducts: Product[] = [
 
 
 
-export const products: Product[] = applyCategoryImages(rawProducts);
-
 // Funções para gerar listas de produtos dinâmicos por categoria
 
 export function getBestSellersInFashion() {
@@ -1871,3 +1898,8 @@ export function getHighlightsInSports() {
     return products.filter(product => product.categoria === 'Esportes, Aventura e Lazer').slice(0, 5);
 }
 
+// No final, ao exportar o array de produtos:
+export const products: Product[] = [
+  ...applyCategoryImages(rawProducts),
+  ...getProdutosVendedor(),
+];
