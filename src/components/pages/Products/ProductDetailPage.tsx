@@ -7,6 +7,7 @@ import { ShoppingBag } from "lucide-react";
 import { useCart } from "../../utils/CartContext";
 import { AnimatedSection } from "../../animations/AnimatedSections";
 import type { ProductColor } from "../../utils/productColors";
+import { getCategoryHrefByName } from "../../utils/categories";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -24,6 +25,14 @@ export default function ProductDetailPage() {
   }
 
   const productColors = product.cores ?? [];
+
+  const hasDiscount = typeof product.originalPrice === "number" && product.originalPrice > product.preco;
+  const discountPercent = hasDiscount
+    ? Math.round((1 - product.preco / (product.originalPrice as number)) * 100)
+    : null;
+
+  const brl = (value: number) =>
+    value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
   useEffect(() => {
     const colors = product?.cores ?? [];
@@ -51,6 +60,7 @@ export default function ProductDetailPage() {
       image: Array.isArray(product.imagem) ? product.imagem[0] : product.imagem,
       price: product.preco,
       quantity: quantity,
+      variant: selectedColor ? `Cor: ${selectedColor.nome} ${selectedColor.hex}` : undefined,
     });
   };
   return (
@@ -59,7 +69,7 @@ export default function ProductDetailPage() {
       {/* Breadcrumb */}
       <nav className=" text-center text-ms  text-gray-500 mb-4">
         <Link to="/" className="hover:underline">Home</Link> &gt;{" "}
-        <Link to={`/categorias/${product.slug.toLowerCase().replace(/\s/g, "-")}`} className="hover:underline">{product.categoria}</Link> &gt;{" "}
+        <Link to={getCategoryHrefByName(product.categoria)} className="hover:underline">{product.categoria}</Link> &gt;{" "}
         <span className="text-gray-700">{product.nome}</span>
       </nav>
 
@@ -85,7 +95,19 @@ export default function ProductDetailPage() {
         <div className="flex-1">
           <h1 className="text-2xl font-bold mb-2">{product.nome}</h1>
           <p className="text-gray-700 mb-2">{descShort}</p>
-          <div className="text-3xl font-bold text-[#5483B3] mb-4">R$ {product.preco.toFixed(2)}</div>
+
+          {hasDiscount && (
+            <div className="flex items-center gap-3 mb-1">
+              {typeof discountPercent === "number" && (
+                <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full">
+                  -{discountPercent}%
+                </span>
+              )}
+              <span className="text-sm text-gray-400 line-through">{brl(product.originalPrice as number)}</span>
+            </div>
+          )}
+
+          <div className="text-3xl font-bold text-[#5483B3] mb-4">{brl(product.preco)}</div>
           
 
           {/* Simulação de cor/tamanho */}

@@ -10,6 +10,12 @@ type Props = {
 const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
   const { items, removeItem, updateQuantity, total } = useCart();
 
+  const extractHexFromVariant = (variant?: string) => {
+    if (!variant) return undefined;
+    const match = variant.match(/#(?:[0-9a-fA-F]{3}){1,2}\b/);
+    return match?.[0];
+  };
+
   // Sempre renderiza, mas controla visibilidade com classes
   return (
     <>
@@ -20,7 +26,7 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
       />
       {/* Sidebar animada */}
       <div 
-        className={`fixed top-0 right-0 h-full w-1/3 bg-white shadow-lg z-50 duration-300 flex flex-col
+        className={`fixed top-0 right-0 h-full md:w-1/3 bg-white shadow-lg z-50 duration-300 flex flex-col
         ${open ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
         style={{ willChange: "transform, opacity" }}
       >
@@ -34,22 +40,36 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
           ) : (
             <>
               {items.map((item) => (
-                <div key={item.id} className="flex gap-3 items-center h-28 my-10 border-t pt-10">
+                <div key={`${item.id}-${item.variant ?? "default"}`} className="flex gap-3 items-center h-28 my-10 border-t pt-10">
                   <img src={item.image} alt={item.name} className="w-24 h-24 object-cover rounded" />
                   <div className="flex-1">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between lg:items-center flex-col lg:flex-row">
                       <div className="text-xl">{item.name}</div>
-                      <div className="font-semibold text-xl object-right">R$ {(item.price * item.quantity).toFixed(2)}</div>
+                    <div className="flex flex-col lg:flex-col lg:items-end">
+                      <span className="font-light  text-gray-500">R$ {(item.price).toFixed(2)}</span>
+                      <div className="font-semibold text-xl">R$ {(item.price * item.quantity).toFixed(2)}</div>
+                    </div>
+                    </div>
+                    {item.variant && (
+                      <div className="text-xs text-gray-500 flex items-center gap-2 ">
+                        <span className="text-xl">Cor: </span>
+                        {extractHexFromVariant(item.variant) && (
+                          <span
+                            className="w-4 h-4 rounded-full border"
+                            style={{ backgroundColor: extractHexFromVariant(item.variant) }}
+                            aria-hidden="true"
+                          />
+                        )}
+                        {/* <span>{item.variant}</span> */}
                       </div>
-                      <span className="font-light text-gray-500">R$ {(item.price).toFixed(2)}</span>
-                    <div className="text-xs text-gray-500">{item.variant}</div>
+                    )}
                     <div className="flex items-center gap-2 mt-1 text-4sm justify-between">
                       <div className="border rounded-lg flex items-center">
                       <button>
                         <button
                           type="button"
                           className="px-2 text-lg text-gray-600 hover:text-[#5483B3] focus:outline-none"
-                          onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                          onClick={() => updateQuantity(item.id, item.variant, Math.max(1, item.quantity - 1))}
                         >
                           −
                         </button>
@@ -60,7 +80,7 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
                           onChange={e => {
                             const qty = parseInt(e.target.value, 10);
                             if (!isNaN(qty) && qty >= 1 && qty <= 100) {
-                              updateQuantity(item.id, qty);
+                              updateQuantity(item.id, item.variant, qty);
                             }
                           }}
                           className="w-10 text-center mx-2"
@@ -68,13 +88,13 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
                         <button
                           type="button"
                           className="px-2 text-lg text-gray-600 hover:text-[#5483B3] focus:outline-none"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.id, item.variant, item.quantity + 1)}
                         >
                           +
                         </button>
                       </button>
                       </div>
-                      <button onClick={() => removeItem(item.id)} className="text-gray-400 hover:text-red-500">
+                      <button onClick={() => removeItem(item.id, item.variant)} className="text-gray-400 hover:text-red-500">
                         <Trash className="w-5 h-5" />
                       </button>
                     </div>

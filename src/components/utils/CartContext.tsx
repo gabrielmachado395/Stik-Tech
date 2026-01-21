@@ -12,8 +12,8 @@ export type CartItem = {
 type CartContextType = {
     items: CartItem[];
     addItem: (item: CartItem) => void;
-    removeItem: (id: string) => void;
-    updateQuantity: (id: string, quantity: number) => void;
+    removeItem: (id: string, variant?: string) => void;
+    updateQuantity: (id: string, variant: string | undefined, quantity: number) => void;
     total: number;
 }
 
@@ -53,12 +53,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         })
     }
 
-    const removeItem = (id: string) => setItems((prev) => prev.filter((i) => i.id !== id));
+    const removeItem = (id: string, variant?: string) =>
+        setItems((prev) => prev.filter((i) => !(i.id === id && i.variant === variant)));
 
-    const updateQuantity = (id: string, quantity: number) => 
+    const updateQuantity = (id: string, variant: string | undefined, quantity: number) => 
         setItems((prev) =>
             prev.map((i) =>
-                i.id === id ? { ...i, quantity } : i
+                i.id === id && i.variant === variant ? { ...i, quantity } : i
             )
         );
 

@@ -7,6 +7,12 @@ import  FooterCheckoutPage  from "./FooterCheckoutPage";
 export default function CheckoutPage() {
   const { items, removeItem, updateQuantity, total } = useCart();
 
+  const extractHexFromVariant = (variant?: string) => {
+    if (!variant) return undefined;
+    const match = variant.match(/#(?:[0-9a-fA-F]{3}){1,2}\b/);
+    return match?.[0];
+  };
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-2">
@@ -25,25 +31,39 @@ export default function CheckoutPage() {
               <div className="text-center py-12 text-gray-500 text-sm">Sua sacola está vazia.</div>
             ) : (
               items.map((item) => (
-                <div key={item.id} className="grid grid-cols-10 items-center border-b last:border-b-0 py-3 sm:py-4 text-xs sm:text-sm xl:text-base">
+                <div key={`${item.id}-${item.variant ?? "default"}`} className="grid grid-cols-10 items-center border-b last:border-b-0 py-3 sm:py-4 text-xs sm:text-sm xl:text-base">
                   <div className="col-span-5 flex items-center gap-2 sm:gap-4">
                     <img src={item.image} alt={item.name} className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded" />
-                    <span className="truncate max-w-[80px] sm:max-w-[120px] xl:max-w-none">{item.name}</span>
+                    <div className="min-w-0">
+                      <div className="truncate max-w-[80px] sm:max-w-[120px] xl:max-w-none">{item.name}</div>
+                      {item.variant && (
+                        <div className="text-[10px] sm:text-xs text-gray-500 flex items-center gap-2 mt-1">
+                          {extractHexFromVariant(item.variant) && (
+                            <span
+                              className="w-3 h-3 rounded-full border"
+                              style={{ backgroundColor: extractHexFromVariant(item.variant) }}
+                              aria-hidden="true"
+                            />
+                          )}
+                          <span className="truncate">{item.variant}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div className="col-span-3 flex items-center justify-center gap-1 sm:gap-2 border rounded-lg w-20 sm:w-24 mx-auto">
                     <button
                       className="w-7 h-7 sm:w-8 sm:h-8 rounded text-base sm:text-xl"
-                      onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                      onClick={() => updateQuantity(item.id, item.variant, Math.max(1, item.quantity - 1))}
                     >-</button>
                     <span className="w-5 sm:w-6 text-center">{item.quantity}</span>
                     <button
                       className="w-7 h-7 sm:w-8 sm:h-8 rounded text-base sm:text-xl"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.id, item.variant, item.quantity + 1)}
                     >+</button>
                   </div>
                   <div className="col-span-2 flex items-center justify-end gap-1 sm:gap-2">
                     <span className="font-semibold text-[#5483B3] text-xs sm:text-sm xl:text-base">R$ {(item.price * item.quantity).toFixed(2)}</span>
-                    <button onClick={() => removeItem(item.id)} className="text-gray-400 hover:text-red-500">
+                    <button onClick={() => removeItem(item.id, item.variant)} className="text-gray-400 hover:text-red-500">
                       <Trash className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>

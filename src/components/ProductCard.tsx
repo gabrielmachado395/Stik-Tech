@@ -68,15 +68,19 @@ export default function ProductCard(props: ProductCardProps) {
   return (
     <Link to={`/produto/${props.id}`} className="no-underline ">
       <div className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100 ">
-        {props.isNew && (
-          <span className="absolute top-2 left-2 bg-[#5483B3] text-white text-xs px-3 py-1 rounded-full z-10">
-            NOVO
-          </span>
-        )}
-        {props.discount && (
-          <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full z-10">
-            -{props.discount}%
-          </span>
+        {(props.discount || props.isNew) && (
+          <div className="absolute top-2 left-2 z-10 flex flex-col items-start gap-1">
+            {props.discount && (
+              <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full">
+                -{props.discount}%
+              </span>
+            )}
+            {props.isNew && (
+              <span className="bg-[#5483B3] text-white text-xs px-3 py-1 rounded-full">
+                NOVO
+              </span>
+            )}
+          </div>
         )}
 
         <div className="relative aspect-square bg-white-100 overflow-hidden flex flex-col items-center justify-center">

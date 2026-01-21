@@ -41,7 +41,7 @@ export default function AddNewProduct() {
   const [originalPrice, setOriginalPrice] = useState("");
   const [discountPrice, setDiscountPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [newCategory, setNewCategory] = useState("");
+  const [newCategory] = useState("");
   const [showNewCategory, setShowNewCategory] = useState(false);
 
   // Simulação de upload de imagens
@@ -51,6 +51,21 @@ export default function AddNewProduct() {
     }
   };
 
+  // Formatação de Preço
+  function formatBRL(value: string) {
+    // Remove tudo que não for número
+    const onlyNumbers = value.replace(/\D/g, "");
+    // converte para centavos
+    const number = Number(onlyNumbers) / 100;
+    if (isNaN(number)) return "";
+    return number.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }
+
+  function parseBRLToNumber(value: string) {
+    const onlyNumbers = value.replace(/\D/g, "");
+    return Number(onlyNumbers) / 100;
+  }
+  
   const suggestions = useMemo(() => filterColorSuggestions(colorQuery, 8), [colorQuery]);
   const livePreviewHex = useMemo(() => {
     const q = colorQuery.trim();
@@ -135,12 +150,12 @@ export default function AddNewProduct() {
       slug,
       imagem: imagensBase64.length === 1 ? imagensBase64[0] : imagensBase64,
       descricao: description,
-      preco: hasDiscount ? Number(discountPrice) : Number(price),
+      preco: parseBRLToNumber(price),
       cores: colors,
       isLaunch,
       hasDiscount,
-      originalPrice: hasDiscount ? Number(originalPrice) : undefined,
-      discountPrice: hasDiscount ? Number(discountPrice) : undefined,
+      originalPrice: hasDiscount ? parseBRLToNumber(originalPrice) : undefined,
+      // discountPrice não é mais necessário, pois o campo "preço" já é o novo preço
     };
 
     // Salvar no localStorage
@@ -167,16 +182,23 @@ export default function AddNewProduct() {
           />
           <div className="flex gap-2 mt-2">
             {images.map((img, idx) => (
-              <span key={idx} className="text-xs text-gray-500 ">{img.name}</span>
+              <span key={idx} className="relative flex flex-col items-center">
+                <img
+                  src={URL.createObjectURL(img)}
+                  alt={`Preview ${idx}`}
+                  className="w-16 h-16 object-cover rounded border"
+                />
+                <span className="text-[10px] text-gray-500 mt-1 max-w-[64px] truncate">{img.name}</span>
+              </span>
             ))}
           </div>
         </div>
         {/* Nome */}
         <div>
-          <label className="block font-semibold mb-1">Nome</label>
+          <label className="block font-semibold  mb-1">Nome</label>
           <input
             type="text"
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-gray-300 rounded-xl px-3 py-2"
             value={name}
             onChange={e => setName(e.target.value)}
             required
@@ -186,21 +208,54 @@ export default function AddNewProduct() {
         {/* Preço */}
         <div>
           <label className="block font-semibold mb-1">Preço</label>
+          <div className="relative">
           <input
-            type="number"
-            className="w-full border rounded px-3 py-2"
-            value={price}
+            type="text"
+            className="w-full border border-gray-300 rounded-xl px-3 py-2"
+            value={formatBRL(price)}
             onChange={e => setPrice(e.target.value)}
             required
-            min={0}
-            step="0.01"
+            inputMode="numeric"
           />
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+          </div>
         </div>
+
+        {/* Desconto */}
+        <div>
+          <label className="flex items-center gap-2 font-semibold">
+            <input
+              type="checkbox"
+              checked={hasDiscount}
+              onChange={e => setHasDiscount(e.target.checked)}
+            />
+            Produto em promoção/desconto
+          </label>
+          {hasDiscount && (
+            <div className="flex gap-4 mt-2">
+              <div className="flex-1">
+                <label className="block text-sm">Preço original</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="w-full border border-gray-300 rounded-xl px-3 py-2 focus:border-[#5483B3] focus:ring-0 focus:border outline-none"
+                    value={formatBRL(originalPrice)}
+                    onChange={e => setOriginalPrice(e.target.value)}
+                    inputMode="numeric"
+                    required
+                  />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">R$</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+                
         {/* Descrição */}
         <div>
           <label className="block font-semibold mb-1">Descrição</label>
           <textarea
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-gray-300 rounded-xl px-3 py-2"
             value={description}
             onChange={e => setDescription(e.target.value)}
             required
@@ -242,7 +297,7 @@ export default function AddNewProduct() {
           <div className="relative">
             <input
               type="text"
-              className="w-full border rounded px-3 py-2 pr-10"
+              className="w-full border rounded-xl border-gray-300 px-3 py-2 pr-10"
               placeholder="Adicionar cor… (ex: Azul Marinho)"
               value={colorQuery}
               onChange={(e) => setColorQuery(e.target.value)}
@@ -321,48 +376,11 @@ export default function AddNewProduct() {
             Lançamento
           </label>
         </div>
-        {/* Desconto */}
-        <div>
-          <label className="flex items-center gap-2 font-semibold">
-            <input
-              type="checkbox"
-              checked={hasDiscount}
-              onChange={e => setHasDiscount(e.target.checked)}
-            />
-            Produto em promoção/desconto
-          </label>
-          {hasDiscount && (
-            <div className="flex gap-4 mt-2">
-              <div>
-                <label className="block text-sm">Preço original</label>
-                <input
-                  type="number"
-                  className="w-full border rounded px-3 py-2"
-                  value={originalPrice}
-                  onChange={e => setOriginalPrice(e.target.value)}
-                  min={0}
-                  step="0.01"
-                />
-              </div>
-              <div>
-                <label className="block text-sm">Novo preço</label>
-                <input
-                  type="number"
-                  className="w-full border rounded px-3 py-2"
-                  value={discountPrice}
-                  onChange={e => setDiscountPrice(e.target.value)}
-                  min={0}
-                  step="0.01"
-                />
-              </div>
-            </div>
-          )}
-        </div>
         {/* Categoria */}
         <div>
           <label className="block font-semibold mb-1">Categoria</label>
           <select
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-gray-300 rounded-xl px-3 py-2"
             value={category}
             onChange={handleCategoryChange}
             required={!showNewCategory}
@@ -371,9 +389,9 @@ export default function AddNewProduct() {
             {CATEGORIES.map((cat) => (
               <option key={cat} value={cat}>{cat}</option>
             ))}
-            <option value="__new__">Criar nova categoria</option>
+            {/* <option value="__new__">Criar nova categoria</option> */}
           </select>
-          {showNewCategory && (
+          {/* {showNewCategory && (
             <input
               type="text"
               className="w-full border rounded px-3 py-2 mt-2"
@@ -382,7 +400,7 @@ export default function AddNewProduct() {
               onChange={e => setNewCategory(e.target.value)}
               required
             />
-          )}
+          )} */}
         </div>
         {/* Botão */}
         <button
