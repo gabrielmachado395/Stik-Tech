@@ -64,7 +64,7 @@ export default function AddNewProduct() {
       // guardando no formato usado pela tela (string), mas mantendo a lógica de parse
       setPrice(String(Math.round((product.preco ?? 0) * 100)));
       setDescription(product.descricao ?? "");
-      setColors((product as any).cores ?? []);
+      setColors(Array.isArray(product.cores) ? product.cores : []);
       setIsLaunch(Boolean((product as any).isLaunch));
       setHasDiscount(Boolean((product as any).hasDiscount));
       setOriginalPrice(
@@ -457,7 +457,7 @@ export default function AddNewProduct() {
         {/* Botão */}
         <button
           type="submit"
-          className="w-full bg-[#5483B3] hover:bg-[#1E3A8A] text-white font-bold rounded py-3 text-lg transition"
+          className="w-full bg-[#5483B3] hover:bg-[#1E3A8A] text-white font-bold rounded-full py-3 text-lg transition "
         >
           {editingId ? "Salvar alterações" : "Cadastrar produto"}
         </button>

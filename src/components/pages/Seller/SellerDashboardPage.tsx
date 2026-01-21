@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import type { Product } from "../../Products";
+import { formatBRL as brl } from "../../utils/formatBRL";
 
 function readSellerName(): string {
   const fromStorage = localStorage.getItem("sellerName");
@@ -161,6 +162,7 @@ export default function SellerDashboardPage() {
               {products.map((p) => {
                 const image = Array.isArray(p.imagem) ? p.imagem[0] : p.imagem;
                 return (
+                <Link to={`/venda-com-a-gente/adicionar-produto/${p.id}`}>
                   <div key={p.id} className="relative rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden group">
                     <div className="relative aspect-square bg-gray-50">
                       {image ? (
@@ -172,7 +174,7 @@ export default function SellerDashboardPage() {
                       {/* Delete (top-right) */}
                       <button
                         type="button"
-                        onClick={() => handleDelete(p.id)}
+                        onClick={(e) => { e.preventDefault(); handleDelete(p.id); }}
                         className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/90 backdrop-blur border border-gray-200 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition"
                         title="Excluir"
                         aria-label="Excluir"
@@ -193,19 +195,19 @@ export default function SellerDashboardPage() {
                         </div>
 
                         {/* Edit (right side) */}
-                        <Link
-                          to={`/venda-com-a-gente/adicionar-produto/${p.id}`}
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-[#5483B3] hover:text-[#1E3A8A]"
+                        
+                          <div className="inline-flex items-center gap-1 text-xs font-semibold text-[#5483B3] hover:text-[#1E3A8A]"
                           title="Alterar produto"
                         >
                           <Pencil className="w-3.5 h-3.5" />
                           Alterar
-                        </Link>
+                          </div>
                       </div>
 
-                      <div className="mt-3 text-sm font-bold text-[#0B1020]">R$ {p.preco.toFixed(2)}</div>
+                      <div className="mt-3 text-sm font-bold text-[#0B1020]">{brl(p.preco)}</div>
                     </div>
                   </div>
+                        </Link>
                 );
               })}
             </div>

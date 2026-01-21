@@ -166,8 +166,10 @@ export default function CategoryPage() {
                 originalPrice={prod.originalPrice}
                 imagem={prod.imagem}
                 cores={prod.cores}
-                // isLaunch={prod.isLaunch}
-                // hasDiscount={prod.hasDiscount}
+                discount={prod.originalPrice && prod.originalPrice > prod.preco
+                  ? Math.round((1 - prod.preco / prod.originalPrice) * 100)
+                  : undefined}
+                isNew={prod.isLaunch}
               />
             ))}
           </div>

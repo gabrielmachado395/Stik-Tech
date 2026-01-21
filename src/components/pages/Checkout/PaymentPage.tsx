@@ -4,6 +4,7 @@ import { useCart } from "../../utils/CartContext";
 import FooterCheckoutPage  from "./FooterCheckoutPage";
 import Header from "../../Header";
 import { fetchAddressByCep } from "../../utils/fetchAddressByCep";
+import { formatBRL as brl } from "../../utils/formatBRL";
 
 export default function PaymentPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -292,7 +293,7 @@ export default function PaymentPage() {
                         <div className="font-semibold">{item.name}</div>
                         <div className="text-sm text-gray-500">Quantidade: {item.quantity}</div>
                       </div>
-                      <div className="font-semibold text-[#5483B3]">R$ {(item.price * item.quantity).toFixed(2)}</div>
+                      <div className="font-semibold text-[#5483B3]">{brl(item.price * item.quantity)}</div>
                     </div>
                   ))
                 )}
@@ -304,7 +305,7 @@ export default function PaymentPage() {
               <div className="space-y-1 mb-4">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal</span>
-                  <span className="font-bold">R$ {total.toFixed(2)}</span>
+                  <span className="font-bold">{brl(total)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Entrega</span>
@@ -312,7 +313,7 @@ export default function PaymentPage() {
                 </div>
                 <div className="flex justify-between text-base font-bold">
                   <span>Total</span>
-                  <span>R$ {total.toFixed(2)}</span>
+                  <span>{brl(total)}</span>
                 </div>
               </div>
               <button

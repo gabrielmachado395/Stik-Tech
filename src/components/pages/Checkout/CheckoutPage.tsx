@@ -3,6 +3,7 @@ import { Trash, ShoppingBag} from "lucide-react";
 import {AnimatedSection} from "../../animations/AnimatedSections";
 import { Link } from "react-router-dom";
 import  FooterCheckoutPage  from "./FooterCheckoutPage";
+import { formatBRL as brl } from "../../utils/formatBRL";
 
 export default function CheckoutPage() {
   const { items, removeItem, updateQuantity, total } = useCart();
@@ -62,7 +63,7 @@ export default function CheckoutPage() {
                     >+</button>
                   </div>
                   <div className="col-span-2 flex items-center justify-end gap-1 sm:gap-2">
-                    <span className="font-semibold text-[#5483B3] text-xs sm:text-sm xl:text-base">R$ {(item.price * item.quantity).toFixed(2)}</span>
+                    <span className="font-semibold text-[#5483B3] text-xs sm:text-sm xl:text-base">{brl(item.price * item.quantity)}</span>
                     <button onClick={() => removeItem(item.id, item.variant)} className="text-gray-400 hover:text-red-500">
                       <Trash className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
@@ -117,11 +118,11 @@ export default function CheckoutPage() {
               <p className="text-xs text-gray-500 mb-2">Confira abaixo o resumo do seu pedido e finalize sua compra.</p>
               <div className="flex justify-between text-sm">
                 <span>Subtotal</span>
-                <span>R$ {total.toFixed(2)}</span>
+                <span>{brl(total)}</span>
               </div>
               <div className="flex justify-between font-bold text-lg mt-2">
                 <span>Total</span>
-                <span className="text-[#5483B3]">R$ {total.toFixed(2)}</span>
+                <span className="text-[#5483B3]">{brl(total)}</span>
               </div>
             </div>
             <Link to="/checkout/payment">

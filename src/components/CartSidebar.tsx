@@ -1,6 +1,7 @@
 import React from "react";
 import { useCart } from "./utils/CartContext";
 import { Trash } from "lucide-react";
+import { formatBRL as brl } from "./utils/formatBRL";
 
 type Props = {
   open: boolean;
@@ -46,8 +47,8 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
                     <div className="flex justify-between lg:items-center flex-col lg:flex-row">
                       <div className="text-xl">{item.name}</div>
                     <div className="flex flex-col lg:flex-col lg:items-end">
-                      <span className="font-light  text-gray-500">R$ {(item.price).toFixed(2)}</span>
-                      <div className="font-semibold text-xl">R$ {(item.price * item.quantity).toFixed(2)}</div>
+                      <span className="font-light  text-gray-500">{brl(item.price)}</span>
+                      <div className="font-semibold text-xl">{brl(item.price * item.quantity)}</div>
                     </div>
                     </div>
                     {item.variant && (
@@ -110,7 +111,7 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
         <div className="px-2 py-4 border-t h-30">
           <div className="flex justify-between mx-4 text-xl">
             <span>Total</span>
-            <span className="font-semibold">R$ {total.toFixed(2)}</span>
+            <span className="font-semibold">{brl(total)}</span>
           </div>
           <button className="w-full mt-4 bg-[#5483B3] hover:bg-[#052659] text-white py-2 border rounded-lg font-bold">
             <><a href="/checkout">Fechar pedido</a></>

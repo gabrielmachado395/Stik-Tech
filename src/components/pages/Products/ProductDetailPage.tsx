@@ -8,6 +8,7 @@ import { useCart } from "../../utils/CartContext";
 import { AnimatedSection } from "../../animations/AnimatedSections";
 import type { ProductColor } from "../../utils/productColors";
 import { getCategoryHrefByName } from "../../utils/categories";
+import {formatBRL as brl} from "../../utils/formatBRL";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -30,9 +31,6 @@ export default function ProductDetailPage() {
   const discountPercent = hasDiscount
     ? Math.round((1 - product.preco / (product.originalPrice as number)) * 100)
     : null;
-
-  const brl = (value: number) =>
-    value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
   useEffect(() => {
     const colors = product?.cores ?? [];

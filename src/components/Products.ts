@@ -10,10 +10,10 @@ export type Product = {
   descricao: string;
   material: string; // Pode ser "N/A" se não usado
   preco: number;
-    createdAt?: number; // Timestamp de criação (opcional)
-    cores?: ProductColor[]; // Lista de cores (nome + hex)
-  isLaunch?: boolean; // Lançamento
-  hasDiscount?: boolean; // Produto em promoção
+    createdAt?: number;
+    cores?: ProductColor[];
+    isLaunch?: boolean; // Indica se é lançamento
+  discount?: boolean; // Produto em promoção
   originalPrice?: number; // Preço original (se desconto)
   discountPrice?: number; // Novo preço (se desconto)
   sku?: string;

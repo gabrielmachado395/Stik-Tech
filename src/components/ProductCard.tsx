@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from './utils/CartContext';
 import { addFavorite, removeFavorite, isFavorite } from './utils/Favorites';
 import type { ProductColor } from './utils/productColors';
+import { formatBRL as brl } from './utils/formatBRL';
 
 interface ProductCardProps {
   id: number;
@@ -42,6 +43,7 @@ export default function ProductCard(props: ProductCardProps) {
     });
   };
 
+
   const handleFavorite = (e: React.MouseEvent) => {
   e.preventDefault();
   if (favorite) {
@@ -69,7 +71,7 @@ export default function ProductCard(props: ProductCardProps) {
     <Link to={`/produto/${props.id}`} className="no-underline ">
       <div className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100 ">
         {(props.discount || props.isNew) && (
-          <div className="absolute top-2 left-2 z-10 flex flex-col items-start gap-1">
+          <div className="absolute top-2 left-2 z-10 flex flex-col-reverse items-start gap-1">
             {props.discount && (
               <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full">
                 -{props.discount}%
@@ -87,7 +89,7 @@ export default function ProductCard(props: ProductCardProps) {
           <img
             src={mainImage}
             alt={props.nome}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 border-b border-gray-100"
             loading="lazy"
           />
 
@@ -129,11 +131,11 @@ export default function ProductCard(props: ProductCardProps) {
           <div className="flex items-center gap-2 mb-3">
             {props.originalPrice && (
               <span className="text-sm text-gray-400 line-through">
-                R$ {props.originalPrice.toFixed(2)}
+                 {brl(props.originalPrice)}
               </span>
             )}
             <span className="text-lg font-bold text-[#5483B3]">
-              R$ {props.preco.toFixed(2)}
+              {brl(props.preco)}
             </span>
           </div>
 
