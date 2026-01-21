@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import type { ProductColor } from "../../utils/productColors";
 import {
   filterColorSuggestions,
@@ -6,6 +7,7 @@ import {
   isHexColor,
   normalizeHex,
 } from "../../utils/productColors";
+import type { Product } from "../../Products";
 
 const CATEGORIES = [
   "Roupas, Calçados e Acessórios",
@@ -28,7 +30,12 @@ const CATEGORIES = [
 ];
 
 export default function AddNewProduct() {
+  const navigate = useNavigate();
+  const { id } = useParams<{ id?: string }>();
+  const editingId = id ? Number(id) : null;
+
   const [images, setImages] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -43,6 +50,34 @@ export default function AddNewProduct() {
   const [category, setCategory] = useState("");
   const [newCategory] = useState("");
   const [showNewCategory, setShowNewCategory] = useState(false);
+
+  useEffect(() => {
+    if (!editingId) return;
+    try {
+      const raw = localStorage.getItem("produtosVendedor");
+      const parsed = raw ? JSON.parse(raw) : [];
+      const list: Product[] = Array.isArray(parsed) ? parsed : [];
+      const product = list.find((p) => p.id === editingId);
+      if (!product) return;
+
+      setName(product.nome ?? "");
+      // guardando no formato usado pela tela (string), mas mantendo a lógica de parse
+      setPrice(String(Math.round((product.preco ?? 0) * 100)));
+      setDescription(product.descricao ?? "");
+      setColors((product as any).cores ?? []);
+      setIsLaunch(Boolean((product as any).isLaunch));
+      setHasDiscount(Boolean((product as any).hasDiscount));
+      setOriginalPrice(
+        typeof (product as any).originalPrice === "number" ? String(Math.round((product as any).originalPrice * 100)) : ""
+      );
+      setCategory(product.categoria ?? "");
+
+      const imgs = Array.isArray(product.imagem) ? product.imagem : product.imagem ? [product.imagem] : [];
+      setExistingImages(imgs);
+    } catch {
+      // ignore
+    }
+  }, [editingId]);
 
   // Simulação de upload de imagens
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,19 +172,23 @@ export default function AddNewProduct() {
       .replace(/[^\w\s-]/g, "")
       .replace(/\s+/g, "-");
 
+    const now = Date.now();
     // Gerar id único (timestamp + random)
-    const id = Date.now() + Math.floor(Math.random() * 1000);
-    const createdAt = Date.now();
+    const newId = now + Math.floor(Math.random() * 1000);
+
+    const finalImages: string[] = imagensBase64.length > 0 ? imagensBase64 : existingImages;
+    const imagem = finalImages.length === 1 ? finalImages[0] : finalImages;
 
     // Montar objeto do produto
     const produto = {
-      id,
-      createdAt,
+      id: editingId ?? newId,
+      createdAt: now,
       nome: name,
       categoria: showNewCategory ? newCategory : category,
       slug,
-      imagem: imagensBase64.length === 1 ? imagensBase64[0] : imagensBase64,
+      imagem,
       descricao: description,
+      material: "N/A",
       preco: parseBRLToNumber(price),
       cores: colors,
       isLaunch,
@@ -160,15 +199,18 @@ export default function AddNewProduct() {
 
     // Salvar no localStorage
     const produtosSalvos = JSON.parse(localStorage.getItem("produtosVendedor") || "[]");
-    localStorage.setItem("produtosVendedor", JSON.stringify([...produtosSalvos, produto]));
+    const list: Product[] = Array.isArray(produtosSalvos) ? produtosSalvos : [];
+    const next = editingId ? list.map((p) => (p.id === editingId ? (produto as unknown as Product) : p)) : [...list, produto as unknown as Product];
+    localStorage.setItem("produtosVendedor", JSON.stringify(next));
 
-    alert("Produto cadastrado! (simulação dinâmica)");
-    // Limpar formulário ou redirecionar, se desejar
+    alert(editingId ? "Produto atualizado!" : "Produto cadastrado! (simulação dinâmica)");
+    navigate("/venda-com-a-gente/dashboard");
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-10 px-4">
-      <h1 className="text-2xl font-bold mb-6">Cadastrar novo produto</h1>
+    <div className="min-h-screen bg-[#F5F7FB] flex flex-col items-center py-10">
+    <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg py-10 px-4">
+      <h1 className="text-2xl font-bold mb-6">{editingId ? "Alterar produto" : "Cadastrar novo produto"}</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Imagens */}
         <div>
@@ -181,6 +223,16 @@ export default function AddNewProduct() {
             className="block border rounded-xl px-3 py-2 border-gray-300"
           />
           <div className="flex gap-2 mt-2">
+            {existingImages.length > 0 && images.length === 0 && (
+              <>
+                {existingImages.map((src, idx) => (
+                  <span key={`existing-${idx}`} className="relative flex flex-col items-center">
+                    <img src={src} alt={`Imagem atual ${idx + 1}`} className="w-16 h-16 object-cover rounded border" />
+                    <span className="text-[10px] text-gray-500 mt-1 max-w-[64px] truncate">Atual</span>
+                  </span>
+                ))}
+              </>
+            )}
             {images.map((img, idx) => (
               <span key={idx} className="relative flex flex-col items-center">
                 <img
@@ -407,9 +459,10 @@ export default function AddNewProduct() {
           type="submit"
           className="w-full bg-[#5483B3] hover:bg-[#1E3A8A] text-white font-bold rounded py-3 text-lg transition"
         >
-          Cadastrar produto
+          {editingId ? "Salvar alterações" : "Cadastrar produto"}
         </button>
       </form>
+    </div>
     </div>
   );
 }

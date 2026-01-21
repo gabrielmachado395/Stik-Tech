@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginSellWithUs() {
+  const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
   const [loginVisible, setLoginVisible] = useState(true);
   const [registerVisible, setRegisterVisible] = useState(false);
@@ -31,6 +32,12 @@ export default function LoginSellWithUs() {
       setIsRegister(false);
       setLoginVisible(true);
     }, FADE_MS);
+  };
+
+  const goToDashboard = (name?: string) => {
+    const trimmed = (name ?? "").trim();
+    if (trimmed) localStorage.setItem("sellerName", trimmed);
+    navigate("/venda-com-a-gente/dashboard");
   };
 
   return (
@@ -69,6 +76,8 @@ export default function LoginSellWithUs() {
         />
         <button
           className="w-full bg-[#5483B3] hover:bg-[#1E3A8A] text-white font-bold rounded-full py-3 text-lg transition mb-2"
+          type="button"
+          onClick={() => goToDashboard(input)}
         >
           Continuar
         </button>
@@ -100,7 +109,13 @@ export default function LoginSellWithUs() {
         <p className="text-center text-gray-800 mb-4 text-base">
           Inscreva-se para começar a vender.
         </p>
-        <form className="w-full">
+        <form
+          className="w-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            goToDashboard(register.name || register.email);
+          }}
+        >
           <label className="block text-gray-900 font-semibold mb-1 text-sm" htmlFor="name">
             Seu nome
           </label>

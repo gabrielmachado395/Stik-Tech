@@ -24,7 +24,7 @@ import FavoriteProductsPage from './components/pages/Products/FavoriteProductsPa
 import SellWithUsPage from './components/pages/Seller/SellWithUsPage';
 import LoginSellWithUs from './components/pages/Seller/LoginSellWithUs';
 import AddNewProduct from './components/pages/Seller/AddNewProduct';
-import { ProtectedRoute } from './components/utils/ProtectedRoute';
+import SellerDashboardPage from './components/pages/Seller/SellerDashboardPage';
 
 function HomePage() {
   // Conteúdo da home
@@ -51,6 +51,7 @@ function App() {
   const isSellWithUsPage = location.pathname.startsWith("/venda-com-a-gente");
   const isLoginSellWithUsPage = location.pathname.startsWith("/venda-com-a-gente/login");
   const isAddNewProductPage = location.pathname.startsWith("/venda-com-a-gente/adicionar-produto");
+  const isSellerDashboardPage = location.pathname.startsWith("/venda-com-a-gente/dashboard");
 
   return (
     <AuthProvider>
@@ -93,8 +94,14 @@ function App() {
           <AddNewProduct />
           // </ProtectedRoute>
           } />
+        <Route path="/venda-com-a-gente/adicionar-produto/:id" element={
+          // <ProtectedRoute>
+          <AddNewProduct />
+          // </ProtectedRoute>
+          } />
+        <Route path="/venda-com-a-gente/dashboard" element={<SellerDashboardPage />} />
       </Routes>
-      {!isCheckoutPage && !isLoginPage && !isLoginConfirmationPage && !isPaymentPage && !isLoginSellWithUsPage && (<Footer />)}
+      {!isCheckoutPage && !isLoginPage && !isLoginConfirmationPage && !isPaymentPage && !isSellWithUsPage && !isLoginSellWithUsPage && !isAddNewProductPage && !isSellerDashboardPage && (<Footer />)}
     </div>
     </AuthProvider>
   );
