@@ -2,9 +2,9 @@ import { useRef, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
-  "/img/hero-banner.jpg",
-  "/img/hero-banner2.jpg",
-  "/img/hero-banner3.jpg",
+  "/img/thumb-blog-09-1024x683.jpg",
+  "/img/thumb-blog-17-1.jpg",
+  "/img/tumb-blog-01.jpg"
 ];
 
 export default function HeroBanner() {
