@@ -76,9 +76,9 @@ function App() {
         <Route path="/blog/:id" element={<ArticlePage />} />
         <Route path="/meus-pacotes" element={<MyPackages />} />
         <Route path="/checkout" element={
-          <ProtectedRoute>
+          // <ProtectedRoute>
             <CheckoutPage />
-          </ProtectedRoute>
+          // </ProtectedRoute>
         } 
         />
         <Route path="/login" element={<LoginPage />} />
