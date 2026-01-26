@@ -128,7 +128,7 @@ export default function ProductCard(props: ProductCardProps) {
               )}
             </div>
             )}
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex flex-col gap-2 mb-3">
             {props.originalPrice && (
               <span className="text-sm text-gray-400 line-through">
                  {brl(props.originalPrice)}

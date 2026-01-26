@@ -217,7 +217,11 @@ export default function ProductDetailPage() {
           {recomendados.map(prod => (
             <Link to={`/produto/${prod.id}`} key={prod.id} className="no-underline ">
             <div key={prod.id} className="min-w-[220px] max-w-[220px] ">
-              <ProductCard {...prod} />
+              <ProductCard {...prod} 
+              discount={prod.originalPrice && prod.originalPrice > prod.preco
+              ? Math.round((1 - prod.preco / prod.originalPrice) * 100)
+              : undefined}
+              />
             </div>
             </Link>
           ))}

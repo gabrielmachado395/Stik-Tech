@@ -83,9 +83,9 @@ export default function SellerDashboardPage() {
       </aside>
 
       {/* Main */}
-      <main className="flex-1 p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full">
         {/* Topbar */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div className="flex flex-col-reverse sm:flex-row-reverse sm:items-center sm:justify-between gap-4 mb-6">
           <div className="relative w-full sm:max-w-md">
             <input
               type="text"
@@ -94,7 +94,7 @@ export default function SellerDashboardPage() {
             />
           </div>
 
-          <div className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3 shadow-sm border border-gray-100">
+          <div className="flex md:items-center flex-col md:flex-row gap-3 bg-white rounded-2xl px-4 py-3 shadow-sm border border-gray-100">
             {sellerAvatar ? (
               <img src={sellerAvatar} alt="Avatar" className="h-10 w-10 rounded-full object-cover" />
             ) : (

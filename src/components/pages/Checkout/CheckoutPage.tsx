@@ -38,15 +38,17 @@ export default function CheckoutPage() {
                     <div className="min-w-0">
                       <div className="truncate max-w-[80px] sm:max-w-[120px] xl:max-w-none">{item.name}</div>
                       {item.variant && (
-                        <div className="text-[10px] sm:text-xs text-gray-500 flex items-center gap-2 mt-1">
+                        <div className="text-[10px] sm:text-xs text-gray-500 flex items-center gap-1 mt-1">
+                          <span>Cor:</span>
                           {extractHexFromVariant(item.variant) && (
                             <span
                               className="w-3 h-3 rounded-full border"
                               style={{ backgroundColor: extractHexFromVariant(item.variant) }}
                               aria-hidden="true"
+                              
                             />
                           )}
-                          <span className="truncate">{item.variant}</span>
+                          {/* <span className="truncate">{item.variant}</span> */}
                         </div>
                       )}
                     </div>

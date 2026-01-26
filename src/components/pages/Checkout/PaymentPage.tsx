@@ -67,6 +67,12 @@ export default function PaymentPage() {
   ];
   const years = Array.from({ length: 12 }, (_, i) => `${new Date().getFullYear() + i}`);
 
+  const extractHexFromVariant = (variant?: string) => {
+    if (!variant) return undefined;
+    const match = variant.match(/#(?:[0-9a-fA-F]{3}){1,2}\b/);
+    return match?.[0];
+  };
+
   return (
       <div className="items-center bg-white min-h-screen">
         <Header />
@@ -292,6 +298,19 @@ export default function PaymentPage() {
                       <div className="flex-1">
                         <div className="font-semibold">{item.name}</div>
                         <div className="text-sm text-gray-500">Quantidade: {item.quantity}</div>
+                        {item.variant && (
+                        <div className="text-sm text-gray-500 items-center flex gap-1">
+                          <span>Cor:</span>
+                          {extractHexFromVariant(item.variant) && (
+                            <span
+                              className="inline-block w-3 h-3 rounded-full border ml-1 align-middle"
+                              style={{ backgroundColor: extractHexFromVariant(item.variant) }}
+                              aria-hidden="true"
+                            />
+                            
+                          )}
+                        </div>
+                        )}
                       </div>
                       <div className="font-semibold text-[#5483B3]">{brl(item.price * item.quantity)}</div>
                     </div>

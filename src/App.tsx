@@ -25,6 +25,8 @@ import SellWithUsPage from './components/pages/Seller/SellWithUsPage';
 import LoginSellWithUs from './components/pages/Seller/LoginSellWithUs';
 import AddNewProduct from './components/pages/Seller/AddNewProduct';
 import SellerDashboardPage from './components/pages/Seller/SellerDashboardPage';
+import { ProtectedRoute } from './components/utils/ProtectedRoute';
+import ProfilePage from './components/pages/Accounts/ProfilePage';
 
 function HomePage() {
   // Conteúdo da home
@@ -66,17 +68,17 @@ function App() {
         <Route path="/politica-de-privacidade" element={<PrivacyPoliticPage />} />
         <Route path="/perguntas-frequentes" element={<FAQ />} />
         <Route path="/criar-artigo" element={
-          // <ProtectedRoute>
+          <ProtectedRoute>
             <CreateArticlePage />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         } />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:id" element={<ArticlePage />} />
         <Route path="/meus-pacotes" element={<MyPackages />} />
         <Route path="/checkout" element={
-          // <ProtectedRoute>
+          <ProtectedRoute>
             <CheckoutPage />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         } 
         />
         <Route path="/login" element={<LoginPage />} />
@@ -100,6 +102,11 @@ function App() {
           // </ProtectedRoute>
           } />
         <Route path="/venda-com-a-gente/dashboard" element={<SellerDashboardPage />} />
+        <Route path="/perfil" element={
+          // <ProtectedRoute>
+            <ProfilePage />
+          // </ProtectedRoute>
+        } />
       </Routes>
       {!isCheckoutPage && !isLoginPage && !isLoginConfirmationPage && !isPaymentPage && !isSellWithUsPage && !isLoginSellWithUsPage && !isAddNewProductPage && !isSellerDashboardPage && (<Footer />)}
     </div>

@@ -25,7 +25,7 @@ export const SellWithUsPage = () => {
         {/* Imagem */}
         <div className="flex-1 flex justify-center mb-8 md:mb-0">
           <img
-            src="/img/venda-com-a-gente/Galvao_Amazon_2.png" // Substitua pelo caminho da sua imagem
+            src="img/Vendedor/banner_vendedor.png" // Substitua pelo caminho da sua imagem
             alt="Pessoa segurando caixa"
             className="max-h-[550px] md:max-h-[620px] w-auto object-contain"
             draggable={false}
@@ -41,7 +41,7 @@ export const SellWithUsPage = () => {
             {/* Card 1 */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
                 <img
-                src="https://m.media-amazon.com/images/G/32/SSR/SellDot/fees.jpg"
+                src="img/Vendedor/card-1.jpg"
                 alt="Taxas reduzidas"
                 className="w-full h-40 object-cover"
                 />
@@ -64,7 +64,7 @@ export const SellWithUsPage = () => {
             {/* Card 2 */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
                 <img
-                src="https://m.media-amazon.com/images/G/32/SSR/SellDot/fretegratis.png"
+                src="img/Vendedor/card-2.jpg"
                 alt="Frete grátis"
                 className="w-full h-40 object-cover"
                 />
@@ -89,7 +89,7 @@ export const SellWithUsPage = () => {
             {/* Card 3 */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
                 <img
-                src="https://m.media-amazon.com/images/G/32/SSR/SellDot/logistica.png"
+                src="img/Vendedor/card-3.jpg"
                 alt="Recompensas"
                 className="w-full h-40 object-cover"
                 />
@@ -151,29 +151,31 @@ export const SellWithUsPage = () => {
 <section className="w-full py-12">
   <div className="max-w-5xl mx-auto rounded-2xl overflow-hidden flex flex-col-reverse md:flex-row items-center bg-gray-900 relative">
     {/* Texto */}
-    <div className="flex-1 p-8 flex flex-col justify-center z-10">
-      <h3 className="text-2xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
+    <div className="flex-1 flex flex-col py-8 md:py-0 *:justify-center z-10">
+      <h3 className="text-2xl md:text-4xl px-8 font-extrabold text-white mb-4 leading-tight">
         60% das vendas na Stik Tech são feitas por pequenas e médias empresas<sup>2</sup>
       </h3>
-      <p className="text-white text-lg mb-8">
+      <p className="text-white text-lg px-8 mb-8">
         Aproveite todos os benefícios de vender na Stik Tech
       </p>
+      <span className="px-8">
       <a
         href="/venda-com-a-gente/login"
         className="bg-[#4373b3] hover:bg-[#5469c0] text-white w-60 flex items-center justify-center font-semibold rounded-full px-8 py-4 text-lg transition shadow"
       >
         Comece a vender
       </a>
+      </span>
     </div>
     {/* Imagem */}
-    <div className="flex-1 h-[260px] md:h-auto w-full relative">
-      <img
-        src="https://m.media-amazon.com/images/G/01/sell/images/prime-boxes/brand-prime-boxes-doorstep-delivery.webp" // Substitua pelo caminho correto da sua imagem
-        alt="Pequenas empresas"
-        className="w-full h-full object-cover object-center md:rounded-none rounded-b-2xl md:rounded-r-2xl opacity-80"
-        draggable={false}
-      />
-      
+    <div className="flex-1 md:h-auto w-full relative flex items-stretch">
+    <img
+      src="img/Vendedor/pequena-media.jpg"
+      alt="Pequenas empresas"
+      className="w-full h-full object-cover object-center md:rounded-none rounded-b-2xl md:rounded-r-2xl opacity-80"
+      draggable={false}
+    />
+
     </div>
   </div>
 </section>

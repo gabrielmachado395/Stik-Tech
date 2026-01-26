@@ -33,7 +33,7 @@ export default function HeroBanner() {
   const next = () => setIndex((prev) => (prev + 1) % images.length);
 
   return (
-    <section className="relative h-[300px] md:h-[400px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-[300px] md:h-[500px] flex items-center justify-center overflow-y-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <div 
             ref={carouselRef}

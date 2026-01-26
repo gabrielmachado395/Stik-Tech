@@ -2,6 +2,7 @@ import React from "react";
 import { useCart } from "./utils/CartContext";
 import { Trash } from "lucide-react";
 import { formatBRL as brl } from "./utils/formatBRL";
+import { Link } from "react-router-dom";
 
 type Props = {
   open: boolean;
@@ -113,9 +114,11 @@ const CartSidebar: React.FC<Props> = ({ open, onClose }) => {
             <span>Total</span>
             <span className="font-semibold">{brl(total)}</span>
           </div>
+          <Link to="/checkout" onClick={onClose}>
           <button className="w-full mt-4 bg-[#5483B3] hover:bg-[#052659] text-white py-2 border rounded-lg font-bold">
-            <><a href="/checkout">Fechar pedido</a></>
+            Fechar pedido
           </button>
+          </Link>
           <button className="w-full mt-4  hover:bg-[#e0e0e0] text-gray-700 py-2 border rounded-lg font-bold">
             <a href="/">Continuar comprando</a>
           </button>

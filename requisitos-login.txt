@@ -1,0 +1,208 @@
+SISTEMA DE LOGIN (LOCAL) — REQUISITOS + IMPLEMENTAÇÃO SUGERIDA (Stik-Tech)
+Data: 22/01/2026
+
+OBJETIVO
+Criar um sistema de login rodando localmente (Node.js recomendado) para:
+
+Cliente: cadastro + confirmação por e-mail + login
+Persistência por usuário: carrinho, favoritos, produtos cadastrados, dados pessoais, endereços
+Evolução para vendedor: usar mesma conta (cliente) com permissões + cadastro de empresa
+Isolamento total: cada conta acessa apenas seus próprios dados
+FLUXO DE CLIENTE (LOGIN PRINCIPAL DO SITE)
+1.1 Tela inicial de login do Cliente
+
+O primeiro login exibido ao usuário deve ser o login do Cliente.
+Usuário inicialmente não possui conta: precisa cadastrar.
+1.2 Cadastro do Cliente
+
+Campos do cadastro DEVEM ser os mesmos do checkout (bloco “Dados pessoais”):
+email
+primeiroNome
+ultimoNome
+cpf
+telefone
+dataNascimento
+Senha deve ser criada (mesmo que no checkout não exista senha, para login é necessário).
+1.3 Confirmação por e-mail
+
+Ao cadastrar, o sistema envia um e-mail com link/token de confirmação.
+A conta só fica “ativa/registrada” após confirmação.
+Até confirmar, login deve ser bloqueado (mensagem: “Confirme seu e-mail”).
+1.4 Após confirmação
+
+Conta registrada.
+Dados pessoais ficam salvos e usados em telas futuras (checkout/endereço/vendedor).
+Implementações importantes:
+
+Validar CPF (formato e, se possível, dígitos verificadores).
+Validar telefone e dataNascimento (idade mínima, se desejado).
+Hash de senha (bcrypt).
+Tokens de confirmação com expiração (ex: 24h).
+DADOS POR USUÁRIO (TUDO DEPENDE DA CONTA LOGADA)
+2.1 Com usuário logado:
+
+Todas as informações do site devem ser referentes à conta dele, incluindo:
+Favoritos
+Itens no carrinho
+Produtos cadastrados (se ele for vendedor)
+Dados pessoais
+Endereços
+2.2 Checkout (PagamentoPage)
+
+Bloco “Dados pessoais” deve vir preenchido automaticamente.
+Endereço:
+Opção “Enviar para meu endereço padrão”
+Opção “Alterar endereço” (editar / adicionar novo)
+Possibilidade de ter múltiplos endereços (casa, trabalho etc)
+2.3 Credenciais para virar vendedor
+
+As credenciais do cliente devem servir para login do vendedor (“entrar com a mesma conta”).
+Implementações importantes:
+
+Definir “perfil do usuário” (me) como fonte de verdade no frontend.
+Persistência do carrinho/favoritos associada ao userId, não global no localStorage.
+Migração: dados que hoje estão em localStorage “global” precisam virar “por usuário”.
+Sugestão prática (frontend):
+
+Em vez de salvar em "favorites", "cart", "produtosVendedor" diretamente,
+salvar em chaves por usuário, ex:
+favorites:{userId}
+cart:{userId}
+sellerProducts:{userId}
+FLUXO DE VENDEDOR
+3.0 Login de vendedor
+
+Na tela do vendedor, deve existir opção:
+(A) Entrar com a mesma conta do cliente (reutiliza credenciais)
+(B) Criar conta diretamente como vendedor
+3.1 Pré-requisito: cadastro da empresa
+
+Antes de cadastrar qualquer produto como vendedor, o usuário precisa cadastrar a empresa.
+A empresa deve aparecer:
+no ProductCard: texto “Vendido por <Nome da Empresa>” (nome em negrito)
+no ProductDetailPage: mesma informação em destaque
+3.2 Permissões
+
+A mesma conta pode ter “role=customer” e depois virar “seller”.
+Ao virar seller, libera dashboard e cadastro de produtos.
+3.3 Cadastro direto como vendedor (conta nova)
+Campos relevantes (mínimo viável para local e já compatível com futuro “real”):
+
+Dados do usuário (representante legal / administrador):
+nome completo
+email (com confirmação)
+telefone
+cpf (para pessoa física) OU cpf do representante (mesmo sendo PJ)
+senha
+Dados da empresa:
+tipoPessoa: PF ou PJ
+nomeEmpresa (nome fantasia)
+razaoSocial (se PJ)
+cnpj (se PJ) ou cpf (se PF)
+inscrição estadual (opcional)
+endereço comercial (CEP, rua, número, bairro, cidade, UF)
+contato comercial (telefone/email, se diferente)
+Dados bancários (opcional no MVP local; útil se quiser simular repasses):
+banco, agência, conta, tipo, titular/documento
+Implementações importantes:
+
+A empresa é uma entidade separada do usuário (um usuário pode trocar/editar empresa).
+O produto deve referenciar sellerId e companyId (ou companyName “congelado” se quiser histórico).
+DASHBOARD DO VENDEDOR (NOME E FUNÇÃO)
+No dashboard, campos “NomeVendedor” e “Seller” devem refletir dados cadastrados:
+Nome do vendedor: nome do usuário logado
+Label/role: “Seller” ou “Vendedor”
+(Opcional) avatar e nome da empresa em algum canto do dashboard
+ISOLAMENTO E SEGURANÇA (LOCAL)
+Requisito:
+
+Cada login só terá acesso às próprias informações.
+Credenciais precisam ficar salvas (de forma segura).
+Implementações importantes (Node):
+
+Banco local: SQLite (recomendado) ou JSON (apenas MVP), com ORM (Prisma) opcional.
+Autenticação:
+Sessão via cookie HTTP-only OU JWT (preferência: cookie HTTP-only).
+Segurança:
+bcrypt para senhas
+rate-limit no login
+validações de entrada (zod/yup)
+CORS restrito ao domínio local do Vite
+“E-mail” local:
+
+Modo dev: usar Ethereal (gera caixa de teste) OU “logar link no console”
+Endpoint de confirmação: /auth/confirm?token=...
+SUGESTÃO DE MODELO DE DADOS (BACKEND)
+
+User:
+
+id, email, passwordHash, emailVerifiedAt
+primeiroNome, ultimoNome, cpf, telefone, dataNascimento
+roles: ["customer", "seller"] (ou booleans)
+createdAt, updatedAt
+Address:
+
+id, userId
+cep, endereco, numero, bairro, cidade, uf, complemento
+isDefault
+Company:
+
+id, ownerUserId
+nomeFantasia, razaoSocial, cnpj/cpf, ie (opcional)
+endereço comercial + contato
+createdAt, updatedAt
+Product:
+
+id, sellerUserId, companyId
+nome, categoria, slug, imagem(s), descricao, material, preco
+cores (array)
+createdAt, updatedAt
+CartItem / Favorite:
+
+id, userId, productId (ou snapshot de dados do produto)
+quantity, variant (para cor etc)
+SUGESTÃO DE ROTAS (BACKEND)
+
+Auth:
+
+POST /auth/register (cria usuário + envia confirmação)
+POST /auth/login
+POST /auth/logout
+GET /auth/me
+GET /auth/confirm?token=...
+Seller:
+
+POST /seller/enable (vira vendedor; exige empresa)
+POST /company (cria/atualiza empresa)
+GET /company/me
+CRUD /seller/products (produtos do seller logado)
+FRONTEND — PONTOS DE INTEGRAÇÃO (IMPORTANTE)
+
+Criar um AuthContext “real”:
+login(), register(), logout(), me()
+guardar estado do usuário logado (id, roles, profile, company)
+Atualizar carrinho/favoritos para usar o userId como namespace.
+Checkout:
+inicializar formData com dados do /auth/me
+endereços vindos de /addresses (ou local por userId no MVP)
+OBS: Arquivos atuais a considerar:
+
+AuthContext.tsx
+CartContext.tsx
+Favorites.ts
+MVP EM FASES (RECOMENDADO)
+
+Fase 1 (Cliente):
+
+register + confirm + login + me
+preencher automaticamente dados pessoais no checkout
+Fase 2 (Persistência por usuário):
+
+carrinho/favoritos por userId
+endereços por userId (com default)
+Fase 3 (Vendedor):
+
+enable seller + cadastrar empresa
+produtos com “vendido por {empresa}”
+dashboard preenchido com dados reais
+==============================================================================

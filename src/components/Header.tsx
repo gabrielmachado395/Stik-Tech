@@ -45,7 +45,7 @@ export default function Header() {
           </div>
           {/* Ícones */}
           <div className="flex items-center gap-4">
-            <Link to="/login" className="flex flex-col items-center text-gray-700 hover:text-[#769FCD]">
+            <Link to="/perfil" className="flex flex-col items-center text-gray-700 hover:text-[#769FCD]">
             <button className="flex flex-col items-center text-gray-700 hover:text-[#769FCD]">
               <User className="w-6 h-6" />
               <span className="text-xs hidden sm:block">Conta</span>

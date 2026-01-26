@@ -13,3 +13,8 @@
 .anim {
     animation: zoomInOut 3s ease-in-out infinite;
 }
+
+/* hover de botões */
+.hover-btn {
+    @apply transition-transform duration-100 hover:-translate-y-0.5 hover:scale-105 hover:shadow-xl active:scale-95 active:translate-y-0 active:shadow-none cursor-pointer;
+}
