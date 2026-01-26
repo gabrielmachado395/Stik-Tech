@@ -23,7 +23,6 @@ export function AnimatedSection({ children, className = '' }: AnimatedSectionPro
     variants={variants}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, amount: 0.2 }}
     >
       {children}
     </motion.section>
