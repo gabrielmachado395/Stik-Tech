@@ -94,8 +94,8 @@ export default function ProductCard(props: ProductCardProps) {
           />
 
           <button
-            className={`absolute top-2 right-2 transition-opacity bg-white rounded-full p-2 shadow-md 
-              ${favorite ? ' opacity-100' : 'opacity-0 group-hover:opacity-100'}
+            className={`absolute top-2 right-2 transition-opacity bg-white rounded-full p-2 shadow-md
+              ${favorite ? 'opacity-100' : 'md:opacity-0 group-hover:opacity-100'} opacity-100
             `}
             onClick={handleFavorite}
             title={favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
