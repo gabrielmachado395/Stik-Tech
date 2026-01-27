@@ -111,7 +111,7 @@ export default function HeaderSellWithUs() {
         </Link>
 
         {/* Menus - só aparecem no desktop */}
-        <nav className="hidden md:flex gap-2 md:gap-4 flex-1 justify-center">
+        <nav className="hidden lg:flex gap-2 md:gap-4 flex-1 justify-center">
           {MENUS.map((menu) => (
             <DropdownMenu key={menu.label} label={menu.label} options={menu.options} />
           ))}

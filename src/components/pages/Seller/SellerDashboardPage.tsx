@@ -6,7 +6,7 @@ import { formatBRL as brl } from "../../utils/formatBRL";
 
 function readSellerName(): string {
   const fromStorage = localStorage.getItem("sellerName");
-  return (fromStorage && fromStorage.trim()) || "NomeVendedor";
+  return (fromStorage && fromStorage.trim()) || "Gabriel";
 }
 
 function readSellerAvatar(): string | null {
@@ -56,7 +56,7 @@ export default function SellerDashboardPage() {
   return (
     <div className="min-h-screen bg-[#F5F7FB] flex">
       {/* Sidebar */}
-      <aside className="hidden md:flex w-64 flex-col bg-gradient-to-b from-[#0B1020] to-[#111B34] text-white px-5 py-6">
+      <aside className="hidden lg:flex w-64 flex-col bg-gradient-to-b from-[#0B1020] to-[#111B34] text-white px-5 py-6">
         <Link to="/" className="flex items-center gap-3 mb-8">
           <img src="/img/logo.png" alt="Stik Tech" className="h-10 w-auto" />
           <div className="font-semibold">Seller Central</div>
@@ -86,13 +86,7 @@ export default function SellerDashboardPage() {
       <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full">
         {/* Topbar */}
         <div className="flex flex-col-reverse sm:flex-row-reverse sm:items-center sm:justify-between gap-4 mb-6">
-          <div className="relative w-full sm:max-w-md">
-            <input
-              type="text"
-              placeholder="Buscar..."
-              className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#5483B3]"
-            />
-          </div>
+          
 
           <div className="flex md:items-center flex-col md:flex-row gap-3 bg-white rounded-2xl px-4 py-3 shadow-sm border border-gray-100">
             {sellerAvatar ? (
@@ -104,7 +98,7 @@ export default function SellerDashboardPage() {
             )}
             <div className="leading-tight">
               <div className="text-sm font-semibold text-gray-900">{sellerName}</div>
-              <div className="text-xs text-gray-500">Seller</div>
+              <div className="text-xs text-gray-500">Stik Elásticos</div>
             </div>
           </div>
         </div>
@@ -115,7 +109,7 @@ export default function SellerDashboardPage() {
             {sellerAvatar ? (
               <img src={sellerAvatar} alt="Foto do vendedor" className="h-14 w-14 rounded-full object-cover" />
             ) : (
-              <div className="h-14 w-14 rounded-full bg-[#0B1020] text-white flex items-center justify-center text-xl font-bold">
+              <div className=" hidden h-14 w-14 rounded-full bg-[#0B1020] text-white md:flex items-center justify-center text-xl font-bold">
                 {sellerName.slice(0, 1).toUpperCase()}
               </div>
             )}
@@ -129,7 +123,7 @@ export default function SellerDashboardPage() {
                 to="/venda-com-a-gente/adicionar-produto"
                 className="inline-flex items-center gap-2 bg-[#5483B3] hover:bg-[#1E3A8A] text-white font-semibold rounded-2xl px-4 py-3 transition"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-8 h-8 md:w-4 md:h-4" />
                 Adicionar produto
               </Link>
             </div>

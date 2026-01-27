@@ -75,6 +75,9 @@ export default function ProfilePage() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    const ok = window.confirm("Tem certeza que deseja sair?");
+    if (!ok) return;
+    
     localStorage.removeItem("token");
     // Redireciona para login ou recarrega a página
     navigate("/login", { replace: true });
@@ -109,13 +112,33 @@ export default function ProfilePage() {
     <div className="w-full bg-gray-100 py-8 flex">
     {/* Conteúdo principal */}
     <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-xl p-6 space-y-8 flex-1">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="font-bold text-2xl text-[#5483B3]">Meu Perfil</h2>
-        {!editMode && (
-          <button className="bg-[#5483B3] text-white font-bold py-2 px-4 rounded-full hover-btn" onClick={handleEdit}>
-            Editar perfil
+      <div className="flex justify-between items-center mb-4 gap-3">
+        <div className="flex items-center gap-2">
+          <User size={22} className="text-[#5483B3]" />
+          <h2 className="font-bold text-2xl text-[#5483B3]">Meu Perfil</h2>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {!editMode && (
+            <button
+              type="button"
+              className="bg-[#5483B3] text-white font-bold py-2 px-4 rounded-full hover-btn"
+              onClick={handleEdit}
+            >
+              Editar perfil
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            title="Sair"
+            aria-label="Sair"
+            className="h-10 w-10 grid place-items-center rounded-full border border-gray-200 hover:bg-red-50 hover:border-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+          >
+            <LogOut size={20} className="text-red-500" />
           </button>
-        )}
+        </div>
       </div>
 
       {/* Informações Pessoais */}
@@ -177,23 +200,6 @@ export default function ProfilePage() {
       )}
       </div>
 
-      {/* Sidebar minimalista à direita */}
-      <div className="fixed right-0 top-0 h-full flex flex-col items-center bg-white border-l shadow-lg py-8 px-2 z-40">
-        <button
-          className="mb-6 p-3 rounded-full hover:bg-gray-100 transition"
-          title="Dados pessoais"
-          // Aqui você pode adicionar navegação para outras abas futuramente
-        >
-          <User size={28} className="text-[#5483B3]" />
-        </button>
-        <button
-          className="mt-auto p-3 rounded-full hover:bg-red-100 transition"
-          title="Sair"
-          onClick={handleLogout}
-        >
-          <LogOut size={28} className="text-red-500" />
-        </button>
-      </div>
     </div>
   );
 }

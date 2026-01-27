@@ -84,7 +84,7 @@ export default function CategoryPage() {
   return (
     <div className=" min-h-screen pb-20">
       {/* Banner */}
-      <div className="w-full h-20 md:h-40 bg-cover bg-center flex items-center bg-gradient-to-r from-[#141e30] to-[#35577d] " >
+      <div className="w-full h-40 bg-cover bg-center flex items-center bg-gradient-to-r from-[#141e30] to-[#35577d] " >
         <h1 className="text-white text-3xl md:text-4xl font-bold p-6 flex items-center justify-center mx-auto">{categoriaAtual}</h1>
       </div>
       <AnimatedSection>

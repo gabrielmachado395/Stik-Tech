@@ -149,10 +149,10 @@ export const SellWithUsPage = () => {
   </div>
 </section>
 <section className="w-full py-12">
-  <div className="max-w-5xl mx-auto rounded-2xl overflow-hidden flex flex-col-reverse md:flex-row items-center bg-gray-900 relative">
+  <div className="max-w-5xl mx-auto rounded-2xl overflow-hidden flex flex-col-reverse lg:flex-row items-center bg-gray-900 relative">
     {/* Texto */}
-    <div className="flex-1 flex flex-col py-8 md:py-0 *:justify-center z-10">
-      <h3 className="text-2xl md:text-4xl px-8 font-extrabold text-white mb-4 leading-tight">
+    <div className="flex-1 flex flex-col py-8 lg:py-0 *:justify-center z-10">
+      <h3 className="text-2xl lg:text-4xl px-8 font-extrabold text-white mb-4 leading-tight">
         60% das vendas na Stik Tech são feitas por pequenas e médias empresas<sup>2</sup>
       </h3>
       <p className="text-white text-lg px-8 mb-8">

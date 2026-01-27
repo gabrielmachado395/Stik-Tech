@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { ProductColor } from "../../utils/productColors";
+import { ArrowLeft } from 'lucide-react';
 import {
   filterColorSuggestions,
   findSuggestionByName,
@@ -8,6 +9,7 @@ import {
   normalizeHex,
 } from "../../utils/productColors";
 import type { Product } from "../../Products";
+import {Link} from "react-router-dom";
 
 const CATEGORIES = [
   "Roupas, Calçados e Acessórios",
@@ -207,10 +209,26 @@ export default function AddNewProduct() {
     navigate("/venda-com-a-gente/dashboard");
   };
 
+
+
   return (
     <div className="min-h-screen bg-[#F5F7FB] flex flex-col items-center py-10">
-    <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg py-10 px-4">
-      <h1 className="text-2xl font-bold mb-6">{editingId ? "Alterar produto" : "Cadastrar novo produto"}</h1>
+    <div className="w-full md:max-w-2xl mx-auto bg-white rounded-xl shadow-lg py-10 px-4">
+      <div className="flex items-center gap-3 mb-3">
+        <Link to="/venda-com-a-gente/dashboard">
+        <button
+          type="button"
+          aria-label="Voltar"
+          className="h-10 w-10 grid place-items-center rounded-full border-gray-200 hover:bg-gray-50 active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
+        >
+          <ArrowLeft className="w-6 h-6 text-gray-600" />
+        </button>
+        </Link>
+      <h1 className="text-2xl font-bold">
+        {editingId ? "Alterar produto" : "Cadastrar novo produto"}
+        </h1>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Imagens */}
         <div>
@@ -220,7 +238,7 @@ export default function AddNewProduct() {
             multiple
             accept="image/*"
             onChange={handleImageChange}
-            className="block border rounded-xl px-3 py-2 border-gray-300"
+            className="block w-full md:w-96 border rounded-xl px-3 py-2 border-gray-300"
           />
           <div className="flex gap-2 mt-2">
             {existingImages.length > 0 && images.length === 0 && (
